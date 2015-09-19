@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="aalife20150604DataSet" targetNamespace="http://tempuri.org/aalife20150604DataSet.xsd" xmlns:mstns="http://tempuri.org/aalife20150604DataSet.xsd" xmlns="http://tempuri.org/aalife20150604DataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="aalife20150604ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="aalife20150604ConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.aalife20150604ConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ItemTableViewTableAdapter" Name="ItemTableView">
+            <MainSource>
+              <DbSource ConnectionRef="aalife20150604ConnectionString (Web.config)" DbObjectName="aalife20150604.dbo.ItemTableView" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT ItemID, ItemName, CategoryTypeID, ItemPrice, ItemBuyDate, UserID, Recommend, ModifyDate, Synchronize, ItemAppID, RegionID, RegionType, ItemType, ZhuanTiID, CardID, RegionTypeName, ItemTypeName, CardName FROM dbo.ItemTableView</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ItemID" DataSetColumn="ItemID" />
+              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
+              <Mapping SourceColumn="CategoryTypeID" DataSetColumn="CategoryTypeID" />
+              <Mapping SourceColumn="ItemPrice" DataSetColumn="ItemPrice" />
+              <Mapping SourceColumn="ItemBuyDate" DataSetColumn="ItemBuyDate" />
+              <Mapping SourceColumn="UserID" DataSetColumn="UserID" />
+              <Mapping SourceColumn="Recommend" DataSetColumn="Recommend" />
+              <Mapping SourceColumn="ModifyDate" DataSetColumn="ModifyDate" />
+              <Mapping SourceColumn="Synchronize" DataSetColumn="Synchronize" />
+              <Mapping SourceColumn="ItemAppID" DataSetColumn="ItemAppID" />
+              <Mapping SourceColumn="RegionID" DataSetColumn="RegionID" />
+              <Mapping SourceColumn="RegionType" DataSetColumn="RegionType" />
+              <Mapping SourceColumn="ItemType" DataSetColumn="ItemType" />
+              <Mapping SourceColumn="ZhuanTiID" DataSetColumn="ZhuanTiID" />
+              <Mapping SourceColumn="CardID" DataSetColumn="CardID" />
+              <Mapping SourceColumn="RegionTypeName" DataSetColumn="RegionTypeName" />
+              <Mapping SourceColumn="ItemTypeName" DataSetColumn="ItemTypeName" />
+              <Mapping SourceColumn="CardName" DataSetColumn="CardName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="aalife20150604DataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="False">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ItemTableView">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ItemID" type="xs:int" />
+              <xs:element name="ItemName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CategoryTypeID" type="xs:int" />
+              <xs:element name="ItemPrice" type="xs:decimal" />
+              <xs:element name="ItemBuyDate" type="xs:dateTime" />
+              <xs:element name="UserID" type="xs:int" />
+              <xs:element name="Recommend" type="xs:unsignedByte" />
+              <xs:element name="ModifyDate" type="xs:dateTime" />
+              <xs:element name="Synchronize" type="xs:unsignedByte" />
+              <xs:element name="ItemAppID" type="xs:int" minOccurs="0" />
+              <xs:element name="RegionID" type="xs:int" minOccurs="0" />
+              <xs:element name="RegionType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ZhuanTiID" msdata:ReadOnly="true" type="xs:int" minOccurs="0" />
+              <xs:element name="CardID" msdata:ReadOnly="true" type="xs:int" minOccurs="0" />
+              <xs:element name="RegionTypeName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemTypeName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CardName" msdata:ReadOnly="true" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

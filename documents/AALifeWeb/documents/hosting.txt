@@ -1,0 +1,131 @@
+MS SQL Server address:     PersonalPaySystem.mssql.somee.com
+Login name:     pyfxl_SQLLogin_1
+Login password:     pfba96y9hd
+Connection string:     workstation id=PersonalPaySystem.mssql.somee.com;packet size=4096;user id=pyfxl_SQLLogin_1;pwd=pfba96y9hd;data source=PersonalPaySystem.mssql.somee.com;persist security info=False;initial catalog=PersonalPaySystem
+
+pyfxl 7459235sss
+
+**********************************************************************************
+
+Once you've signed up your 7Host free account a confirmation mail will be sent containing the following information. 
+
+Note that FTP is activated a few hours after you have signed up. 
+
+ASP Free server 
+Your domain name is
+http://free.7host.com/youraccount/
+
+FTP Settings
+FTP Server address: ftp.7host.com
+FTP Account: your user account
+FTP Password: your password
+Port: 21
+
+ASP.NET Free server 
+Your domain name is
+http://youraccount.7hostfree.com/
+
+FTP Settings
+FTP Server address: ftp.7hostfree.com
+FTP Account: your user account
+FTP Password: your password
+Port: 21
+
+PHP Free server 
+Your domain name is
+http://youraccount.7host08.com/
+
+FTP Settings
+FTP Server address: ftp.7host08.com
+FTP Account: your user account
+FTP Password: your password
+Port: 21
+
+In all Free server, your space does NOT contain any default folder or files. 
+
+Hi fengxiangling,
+Thank you for joining 7Host!
+
+Your ASP.NET Free Account has been activated, please take note of the 
+following data:
+
+Control Panel:
+Address: http://www.7host.com/login.asp
+User: pyfxl
+Password: 03C1Y0H
+
+FTP:
+Ftp Server: ftp://ftp.7hostfree.com/
+User: pyfxl
+Password: 03C1Y0H ZHUBOFK GSNUM80
+
+
+
+Your homepage address is http://pyfxl.7hostfree.com/
+
+
+
+***********************************************************************************************
+
+
+New Account Information
+
+Hosting Package: Free Web Hosting Plan
+Domain: pps.host-ed.me
+First Payment Amount: $0.00 USD
+Recurring Amount: $0.00 USD
+Billing Cycle: Free Account
+Next Due Date: 00/00/0000
+
+Login Details
+
+Username: ppshoste
+Password: 137zyckKD6
+
+Control Panel URL: http://176.9.105.210:2082/
+Once your domain has propogated, you may also use http://www.pps.host-ed.me:2082/
+
+Server Information
+
+Server Name: F1
+Server IP: 176.9.105.210
+
+If you are using an existing domain with your new hosting account, you will need to update the nameservers to point to the nameservers listed below.
+
+Nameserver 1: ns1.host-ed.me (184.172.202.182)
+Nameserver 2: ns2.host-ed.me (184.172.202.183)
+
+Uploading Your Website
+
+Temporarily you may use one of the addresses given below to manage your web site:
+
+Temporary FTP Hostname: 176.9.105.210
+Temporary Webpage URL: http://176.9.105.210/~ppshoste/
+
+And once your domain has propagated you may use the details below:
+
+FTP Hostname: pps.host-ed.me
+Webpage URL: http://www.pps.host-ed.me
+
+Email Settings
+
+For email accounts that you setup, you should use the following connection details in your email program:
+
+POP3 Host Address: mail.pps.host-ed.me
+SMTP Host Address: mail.pps.host-ed.me
+Username: The email address you are checking email for
+Password: As specified in your control panel
+
+Thank you for choosing us.
+
+
+*******************************************************************************************
+
+Hi,
+As per your request, we are sending your user id and password to access the services of http://www.aspspider.com.
+
+Your User Id : pyfxl
+Your Password : 7459235
+
+Visit http://www.aspspider.com and login using your user id and password to access all our services.
+
