@@ -1,1 +1,0 @@
-<add key="SiteTips" value="新功能：&lt;a href=&quot;UserAdmin.aspx#category&quot;&gt;自定义类别&lt;/a&gt;"/>
