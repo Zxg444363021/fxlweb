@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>冯湘灵 - 简历（Resume）</title>
+<link rel="Shortcut Icon" href="favicon.ico" />
+<link href="common/style.css" rel="stylesheet" type="text/css" />
+<link href="common/print.css" rel="stylesheet" type="text/css" media="print" />
+<script type="text/javascript" src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.js"></script>
+<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+<script type="text/javascript">
+    $(function(){
+        $("#content dl").hover(function(){
+            var dlcss = $(this).attr("class");
+            if(dlcss == "my") {
+                $(this).find("dd").css({"color":"#C33"});
+            } else if(dlcss == "edu") {
+                $(this).find("dd").css({"color":"#090"});
+            } else if(dlcss == "job") {
+                $(this).find("dd").css({"color":"#03C"});
+            }
+        },function(){
+            $(this).find("dd").removeAttr("style");
+        });
+        
+        $(window).scroll(function(){
+            $("#top .note").html("");
+            if($(document).scrollTop() > 0) {
+                $("#top .note").html("<p><h1>冯湘灵</h1></p><p><strong>籍贯：</strong>湖南省湘潭县</p><p><strong>学历：</strong>大专</p><p><strong>手机：</strong>185 655 92465</p><p><strong>特长：ASP.NET, JSP, JAVA, SQL, Android, Flash, DIV+CSS, JS, jQuery, Json</strong></p>");
+            }
+        });
+        
+        $("a.popwin").fancybox({
+            'titleShow'       : false,
+            'transitionIn'    : 'elastic',
+            'transitionOut'   : 'elastic'
+        });
+
+		$(".lazyimg").lazyload();
+        
+    });
+</script>
+</head>
+
+<body>
+<div id="box">
+    <div id="top">
+        <div class="fxl"><img src="images/fxl.jpg" /></div>
+        <div class="note"></div>
+        <div class="clear"></div>
+    </div>
+    <div id="content">
+        <dl class="my">
+            <dt>1983</dt>
+            <dd><h1>冯湘灵</h1></dd>
+            <dd><strong>籍贯：</strong>湖南省湘潭县</dd>
+            <dd><strong>学历：</strong>大专</dd>
+            <dd><strong>手机：</strong>185 655 92465</dd>
+            <dd><strong>特长：ASP.NET, JSP, JAVA, SQL, Android, Flash, DIV+CSS, JS, jQuery, Json</strong></dd>
+          <div class="clear"></div>
+        </dl>
+        <dl class="edu">
+            <dt>1995</dt>
+            <dd><h1>湘潭县第八中学</h1></dd>
+            <dd><strong>班级：</strong>59班</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="edu">
+            <dt>1998</dt>
+            <dd><h1>湘潭大学职业技术学院</h1></dd>
+            <dd><strong>学院：</strong>兴湘学院</dd>
+            <dd><strong>专业：</strong>计算机科学与技术</dd>
+            <dd><strong>学历：</strong>大专</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="job">
+            <dt>2003</dt>
+            <dd><h1>番禺新华电脑培训中心</h1></dd>
+            <dd><h2>新华电脑培训中心是由新华书店开办的电脑培训机构，开设多门电脑培训课程，一对一教学。</h2></dd>
+            <dd><strong>职位：</strong>电脑培训</dd>
+            <dd><strong>职责：</strong>培训五笔打字、Office办公软件、Photoshop、网页三剑客和硬件维修等课程。 </dd>
+            <dd><strong>体会：</strong>通过培训深入地学习了软件知识，掌握了自己的一套教学方法和提升了与学生的沟通能力。</dd>
+            <dd><strong>技术：</strong>Office, Photoshop, Dreamweaver, Fireworks, Flash, 硬件</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="job">
+            <dt>2005</dt>
+            <dd><h1>广州松蒲电子科技有限公司</h1></dd>
+            <dd><h2>松蒲科技原以电子安防工程为主营业务，以销售海图为次经营业务。后经业务发展，新成立船舶门户网站开发部门。</h2></dd>
+            <dd><strong>职位：</strong>网页设计师</dd>
+            <dd><strong>职责：</strong>参与大型船舶门户网站 www.39ship.com 视图（View）层的设计和制作，使用JSP语言和MVC三层结构，维护公司电脑的正常运行，维护网站服务器Win2003和Tomcat的安装和配置。</dd>
+            <dd><strong>体会：</strong>使用JSP语言和Eclipse开发工具，了解了团队合作的重要性。</dd>
+            <dd><strong>技术：</strong>DIV+CSS, JSP, Eclipse, MYSQL, JS, Win2003, 硬件</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="job">
+          <dt>2007</dt>
+            <dd><h1>广州恒众服装有限公司</h1></dd>
+            <dd><h2>恒众服装是一家服装外贸企业，专业生产安全服出口欧美国家。</h2></dd>
+            <dd><strong>职位：</strong>高级网页设计师</dd>
+            <dd><strong>职责：</strong>负责公司网站 <a href="http://www.capleecorp.com" target="_blank">www.capleecorp.com</a>、<a href="http://www.sunwind.com.hk" target="_blank">www.sunwind.com.hk</a> 的设计、开发和维护，负责网站后台的开发，负责公司文件服务器的管理和数据备份，负责公司电脑、网络和办公设备的日常维护。</dd>
+            <dd><strong>体会：</strong>使用ASP.NET语言和MYSQL数据库开发，结合Web2.0和JS完善用户体验。由于工作积极努力，公司提升为主管待遇。</dd>
+            <dd><strong>技术：</strong>ASP.NET, MYSQL, DIV+CSS, Flash, JS, Ajax, 硬件, 网络</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="job">
+            <dt>2012</dt>
+            <dd><h1>广州颖典计算机技术服务有限公司</h1></dd>
+            <dd><h2>颖典计算机是一家销售股票软件的公司，其主要通过官方网站推出活动、通过微博获取用户，通过录制股票分析课程定期对用户进行培训。</h2></dd>
+            <dd><strong>职位：</strong>网站程序员</dd>
+            <dd><strong>职责：</strong>负责公司网站 <a href="http://www.tophmj.com" target="_blank">www.tophmj.com</a> 的后台开发，负责公司网站活动的设计、开发和上线，负责公司网站的改版和用户体验，负责公司移动网站和手机客户端Android开发。</dd>
+            <dd><strong>体会：</strong>从技术上熟悉ASP.NET、jQuery、Json的运用，从体验上熟悉各种延迟加载、图片幻灯和Ajax异步请求等效果。熟悉Android组件、布局和视图的应用，熟悉Android基于网络的开发，熟悉Android数据存储。</dd>
+            <dd><strong>技术：</strong>ASP.NET, SQL2008, Android, DIV+CSS, jQuery, Json, Ajax</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="job">
+            <dt>2013</dt>
+            <dd><h1>竞优（广州）信息技术有限公司</h1></dd>
+            <dd><h2>竞优IFCA是专业房地产系统解决方案提供者，公司产品包括租赁物业、成本核算预算、财务系统、售楼系统、HR系统等。</h2></dd>
+            <dd><strong>职位：</strong>.Net高级程序员</dd>
+            <dd><strong>职责：</strong>负责根据客户需求文档完成新功能，负责租赁物业系统BUG修改，负责编写新功能的技术文档，参与系统完善技术讨论。</dd>
+            <dd><strong>体会：</strong>在各方面都成熟的软件公司，专职专能。学习到了各种应用最新的技术，学习了WebServices和接口的编写，学习了TFS代码服务器和使用JIRA管理项目，学习了团队的合作。</dd>
+            <dd><strong>技术：</strong>ASP.NET, SQL2008, WebServices, JS, jQuery, Json, Ajax</dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="my">
+            <dt>2015</dt>
+            <dd><h1>自我评价</h1></dd>
+            <dd><strong>特长：ASP.NET, JSP, JAVA, SQL, Android, Flash, DIV+CSS, JS, jQuery, Json, Ajax</strong></dd>
+            <dd><strong>评价：</strong>本人有多年C#语言开发ASP.NET网站经验，有JAVA语言开发JSP网站经验，有Flash AS 3.0语言开发经验，熟悉MVC三层网站结构，熟悉多种设计模式和算法，熟悉VS2012、Eclipse和Android Studio开发工具的使用，熟悉SQL2008、MYSQL和SQLite数据库，熟悉DIV+CSS标准的Web2.0技术，熟悉JS、jQuery、Json、Ajax技术，熟悉Android应用的开发和发布，熟悉Activity、Services、Broadcast、Intent、SQLite和SharedPreferences等组件。己有安卓应用“AA生活记账”发布在各大应用市场。有发布、接入第三方平台，如QQ空间、QQ登录等经验。</dd>
+            <dd>在线简历和案例：<a href="http://www.fxlweb.com/resume">http://www.fxlweb.com/resume</a></dd>
+            <div class="clear"></div>
+        </dl>
+        <a name="a1" id="a1"></a>
+        <dl class="zp">
+            <dt></dt>
+            <dd><h1>Android案例</h1></dd>
+            <dd>&nbsp;</dd>
+            <dd>
+			    <a href="images/zpB25.png" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA25.jpg" alt="AA生活记账" title="AA生活记账" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="images/zpB27.png" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA27.jpg" alt="AA生活记账" title="AA生活记账" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="images/zpB26.png" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA26.jpg" alt="AA生活网络版" title="AA生活网络版" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="images/zpB28.png" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA28.jpg" alt="AA生活网络版" title="AA生活网络版" /></a>
+                <a href="http://zhushou.360.cn/detail/index/soft_id/194688" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA29.png" alt="AA生活记账" title="AA生活记账" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="zp">
+            <dt></dt>
+            <dd><h1>Flash案例</h1></dd>
+            <dd>
+                <a href="http://www.sunwind.com.hk/zoomimage/zoom.html?imgfile=21103/21103-b.jpg" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA18.jpg" alt="FLASH服装定制" title="FLASH服装定制" /></a>&nbsp;&nbsp;
+                <a href="http://www.sunwind.com.hk/ecatalog/emain.html?pagefile=safety2011.xml" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA19.jpg" alt="FLASH电子书" title="FLASH电子书" /></a>&nbsp;&nbsp;
+                <a href="http://www.sunwind.com.hk/flashflier/mainflier.html?imgfile=newproducts/RO-HV-Public-Safety-Vest-ASI.jpg" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA20.jpg" alt="FLASH宣传单定制" title="FLASH宣传单定制" /></a>&nbsp;&nbsp;
+                <a href="http://www.sunwind.com.hk/mytopp" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA21.jpg" alt="FLASH网站" title="FLASH网站" /></a>
+            </dd>
+            <div class="clear"></div>
+        </dl>
+        <dl class="zp lineend">
+            <dt></dt>
+            <dd><h1>网站案例</h1></dd>
+            <dd>&nbsp;</dd>
+            <dd>
+                <ul>
+                    <li><a href="http://www.fxlweb.com" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA24.jpg" alt="fxlweb.com" title="fxlweb.com" /></a></li>
+                    <li><a href="http://www.zurijewel.com/chinese/" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA22.jpg" alt="zurijewel.com" title="zurijewel.com" /></a></li>
+                    <li><a href="http://www.capleecorp.com/rainieroutfitters/safety-apparel.shtml" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA1.jpg" alt="capleecorp.com" title="capleecorp.com" /></a></li>
+                    <li><a href="images/zpB6.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA6.jpg" alt="Caplee Old" title="Caplee Old" /></a></li>
+                    <li><a href="images/zpB7.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA7.jpg" alt="Caplee Old" title="Caplee Old" /></a></li>
+                    <li><a href="http://www.toppingmetalworks.com" target="_blank"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA8.jpg" alt="toppingmetalworks.com" title="toppingmetalworks.com" /></a></li>
+                    <li><a href="images/zpB9.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA9.jpg" alt="39Ship" title="39Ship" /></a></li>
+                    <li><a href="images/zpB10.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA10.jpg" alt="39Ship" title="39Ship" /></a></li>
+                    <li><a href="images/zpB11.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA11.jpg" alt="39Ship BBS" title="39Ship BBS" /></a></li>
+                    <li><a href="images/zpB12.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA12.jpg" alt="胜海船舶" title="胜海船舶" /></a></li>
+                    <li><a href="images/zpB13.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA13.jpg" alt="海图管理系统" title="海图管理系统" /></a></li>
+                    <li><a href="images/zpB17.jpg" class="popwin"><img class="lazyimg" src="images/loading.gif" data-original="images/zpA17.jpg" alt="食品网站" title="食品网站" /></a></li>
+                </ul>
+            </dd>
+            <div class="clear"></div>
+        </dl>
+    </div>
+    <div id="tool" onclick="confirm('确定要打印吗，如果没有打印预览先取消吧！') ? print() : ''" onmouseover="this.style.background='#EEE'" onmouseout="this.style.background='#E8E8E8'">打印</div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="../common/visits.js"></script>
+</body>
+</html>

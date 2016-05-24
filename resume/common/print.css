@@ -1,0 +1,29 @@
+@charset "utf-8";
+body {
+	background-color: #FFF;
+	font-size: 14px;
+}
+#top {
+	background-color: transparent;
+}
+#top .note {
+	display: none;
+}
+#content {
+	padding-top: 30px;
+}
+#content dl {
+	padding-bottom: 20px;
+}
+#content dt {
+	font-family: Arial;
+}
+#content dl.my {	
+	background: url("../images/bglineend.gif") 65px bottom no-repeat transparent;
+}
+#content dl.zp {
+	display: none;
+}
+#tool {
+	display: none;
+}

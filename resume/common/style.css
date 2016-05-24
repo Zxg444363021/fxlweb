@@ -1,0 +1,160 @@
+@charset "utf-8";
+dl,dt,dd,ul,li,h1,h2,h3,p,table,th,td,img,body,html,option,select,em 
+{
+    border: 0; margin: 0; padding: 0; list-style: none; font-style: normal; font-weight: normal;
+}
+html {
+	_background: url(about:black) fixed;
+}
+body {
+	font-family: "微软雅黑", "宋体", Arial;
+	font-size: 12px;
+	color: #666;
+	cursor: default;
+	background-color: #F8F8F8;
+}
+a {
+	color: #333;
+}
+a:hover {
+	color: #666;
+}
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	height: 0;
+}
+
+#box {
+	width: 800px;
+	margin: 0 auto;
+	position: relative;
+	background-color: #FFF;
+}
+
+#top {
+	width: 800px;
+	height: 132px;	
+	position: fixed;
+	top: 0px;
+	background-color: #FFF;
+	z-index: 100;
+	padding-top: 30px;
+	_position: absolute;
+	_top: expression(eval(document.documentElement.scrollTop));
+}
+#top .fxl {
+	height: 132px;	
+	width: 132px;
+	background: url("../images/bgline.gif") 65px top repeat-y;
+	text-align: center;
+	float: left;
+}
+#top .fxl img {
+	border: 2px solid #CCC;	
+}
+#top .note {
+	float: left;	
+	padding-left: 30px;
+	width: 638px;
+	height: 132px;	
+}
+#top .note h1 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #C33;
+}
+#top .note p {
+	padding: 1px 0;
+}
+
+#content {
+	width: 100%;
+	padding-top: 162px;
+}
+#content dl {
+	width: 100%;
+	padding-bottom: 50px;
+	background: url("../images/bgline.gif") 65px center repeat-y transparent;
+}
+#content dl dt {
+	width: 132px;
+	height: 18px;
+	color: #FFF;
+	float: left;
+	text-align: center;
+	font-weight: bold;
+}
+#content dl dd {
+	padding-left: 30px;
+	padding-right: 30px;
+	width: 608px;
+	float: right;
+	padding-bottom: 3px;
+}
+#content dl dd h1 {
+	font-size: 14px;
+	font-weight: bold;
+}
+#content dl dd h2 {
+	font-size: 12px;
+}
+#content dl.my dt {
+	background: url("../images/icon.gif") center 0px no-repeat transparent;
+}
+#content dl.my dd h1 {
+	color: #C33;
+}
+#content dl.edu dt {
+	background: url("../images/icon.gif") center -18px no-repeat transparent;
+}
+#content dl.edu dd h1 {
+	color: #090;
+}
+#content dl.job dt {
+	background: url("../images/icon.gif") center -36px no-repeat transparent;
+}
+#content dl.job dd h1, #content dl.job dd h2 {
+	color: #03C;
+}
+#content dl.zp dd h1 {
+	color: #93C;
+}
+#content dl.zp dd ul {
+	
+}
+#content dl.zp dd ul li {
+	width: 112px;
+	height: 122px;
+	overflow: hidden;
+	float: left;
+	margin-bottom: 10px;
+}
+#content dl.zp dd ul li img {
+	border:1px solid #FFF;
+}
+#content dl.zp dd ul li img:hover {
+	border:1px solid #C9F;
+}
+#content dl.lineend {	
+	background: url("../images/bglineend.gif") 65px top no-repeat transparent;
+}
+
+
+#tool {
+	position: fixed;
+	bottom: 70px;
+	left: 50%;
+	margin-left: 430px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background-color: #E8E8E8;
+	cursor: pointer;
+	color: #333;	
+	z-index: 90;
+	_position: absolute;
+	_top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight)-70);
+}
