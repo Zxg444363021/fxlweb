@@ -1,33 +1,10 @@
-﻿<%@ Page Title="智能添加消费" Language="C#" MasterPageFile="UserControl/MasterPage.master" AutoEventWireup="true" CodeFile="ItemAddSmart.aspx.cs" Inherits="ItemAddSmart" %>
+﻿<%@ Page Title="添加消费" Language="C#" MasterPageFile="UserControl/MasterPage.master" AutoEventWireup="true" CodeFile="ItemAddSmart.aspx.cs" Inherits="ItemAddSmart" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<style type="text/css">
-#zhuantiedit {
-    width: 400px;
-    margin-left: -220px;
-    height: 180px;
-    overflow: auto;
-    top: 240px;
-}
-#zhuantiedit table 
-{
-    border-collapse: collapse;
-    border: 1px solid #FFF;
-    margin-bottom: 5px;
-}
-#zhuantiedit table td, #zhuantiedit table th
-{
-    background: #F4F4F4;
-    border: 1px solid #C4C4C4;
-    height: 23px;
-    text-align: center;
-}
-.userdiv {
-    max-height: 507px;
-}
-</style>
+<asp:Content ID="Content1" ContentPlaceHolderID="js" Runat="Server">
 <script type="text/javascript">
+
     $(function () {
+
         $(".smartitemtype p").click(function () {
             $("#<%=ItemType.ClientID %>").val($(this).text());
             $("#<%=ItemTypeHid.ClientID %>").val(this.getAttribute("ref"));
@@ -66,7 +43,7 @@
         function getitemname(catid) {
             $.ajax({
                 type: "post",
-                url: "/AutoSmartItemNameJson.aspx?term=" + catid,
+                url: "/Web2015/AutoSmartItemNameJson.aspx?term=" + catid,
                 dataType: "json",
                 cache: false,
                 beforeSend: function () {
@@ -86,7 +63,7 @@
             
             $.ajax({
                 type: "post",
-                url: "/AutoItemNameJson.aspx?term=" + encodeURIComponent($(this).val()),
+                url: "/Web2015/AutoItemNameJson.aspx?term=" + encodeURIComponent($(this).val()),
                 dataType: "json",
                 cache: false,
                 beforeSend: function () {
@@ -101,7 +78,7 @@
             });
         });
         
-        $(".smartitemname p").live("click", function () {
+        $("body").on("click", ".smartitemname p", function () {
             $("#<%=ItemName.ClientID %>").val($(this).text());
             $(".smartitemname p").removeClass("on");
             $(this).addClass("on");
@@ -112,7 +89,7 @@
 
             $.ajax({
                 type: "post",
-                url: "/AutoSmartItemPriceJson.aspx?term=" + encodeURIComponent($(this).html()),
+                url: "/Web2015/AutoSmartItemPriceJson.aspx?term=" + encodeURIComponent($(this).html()),
                 dataType: "json",
                 cache: false,
                 beforeSend: function () {
@@ -125,7 +102,7 @@
             });
         });
 
-        $(".smartitemprice p").live("click", function () {
+        $("body").on("click", ".smartitemprice p", function () {
             $("#<%=ItemPrice.ClientID %>").val($(this).text());
             $(".smartitemprice p").removeClass("on");
             $(this).addClass("on");
@@ -141,7 +118,7 @@
         }
 
         function loading(obj) {
-            $(obj).html("<img src='/Images/Others/ui-anim_basic_16x16.gif' alt='' title='' />");
+            $(obj).html("<img src='theme/images/ui-anim_basic_16x16.gif' alt='' title='' />");
         }
 
         var now = new Date("<%=Session["TodayDate"].ToString().Replace("-", "/") %>");
@@ -172,7 +149,7 @@
             ztDown.attr("disabled", "disabled");
         }
         
-        $(".smartregion p").live("click", function () {
+        $("body").on("click", ".smartregion p", function () {
             $(".smartregion p").removeClass("on");
             $(this).addClass("on");
 
@@ -201,51 +178,6 @@
             showdate2(now2);
         });
 
-        <%--$(".rd").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("d");
-            var now2 = new Date(now);
-            now2.setMonth(now2.getMonth() + 1);
-            now2.setDate(now2.getDate() - 1);
-            showdate2(now2);
-        });
-
-        $(".rw").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("w");
-            var now2 = new Date(now);
-            now2.setMonth(now2.getMonth() + 1);
-            now2.setDate(now2.getDate() - 1);
-            showdate2(now2);
-        });
-
-        $(".rm").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("m");
-            var now2 = new Date(now);
-            now2.setMonth(now2.getMonth() + 11);
-            showdate2(now2);
-        });
-
-        $(".rj").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("j");
-            var now2 = new Date(now);
-            now2.setFullYear(now2.getFullYear() + 2);
-            showdate2(now2);
-        });
-
-        $(".ry").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("y");
-            var now2 = new Date(now);
-            now2.setFullYear(now2.getFullYear() + 2);
-            showdate2(now2);
-        });
-        
-        $(".rb").live("click", function () {
-            $("#<%=RegionTypeHid.ClientID %>").val("b");
-            var now2 = new Date(now);
-            now2.setMonth(now2.getMonth() + 1);
-            now2.setDate(now2.getDate() - 1);
-            showdate2(now2);
-        });--%>
-
         var weekArr = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
 
         function showdate2(date) {
@@ -271,22 +203,22 @@
             showdate(date);
         }
 
-        $(".smartitembuydate p").live("click", function () {
+        $("body").on("click", ".smartitembuydate p", function () {
             $(".smartitembuydate p").removeClass("on");
             $(this).addClass("on");
         });
         
-        $(".pd").live("click", function () {
+        $("body").on("click", ".pd", function () {
             now.setDate(now.getDate() - 1);
             showdate(now);
         });
 
-        $(".nd").live("click", function () {
+        $("body").on("click", ".nd", function () {
             now.setDate(now.getDate() + 1);
             showdate(now);
         });
 
-        $(".td").live("click", function () {
+        $("body").on("click", ".td", function () {
             showdate(cur);
             var cd = cur.getFullYear() + "/" + fullmonth(cur.getMonth() + 1) + "/" + fullmonth(cur.getDate());
             now = new Date(cd);
@@ -301,8 +233,8 @@
         }
 
         $("#<%=ItemBuyDate.ClientID %>").datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
+            changeMonth: true,
+            changeYear: true,
             defaultDate: "<%=Session["TodayDate"].ToString() %>",
             onSelect: function (date, format) {
                 now = new Date(date);
@@ -312,43 +244,43 @@
         });
         
         $("#<%=ItemBuyDate1.ClientID %>").datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true
+            changeMonth: true,
+            changeYear: true
         });
 
         $("#<%=ItemBuyDate2.ClientID %>").datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true
+            changeMonth: true,
+            changeYear: true
         });
+
+        //固定消费预览
+        var dialog = $("#dialog").dialog({
+            autoOpen: false,
+            width: 450,
+            height: 300
+        });
+        dialog.parent().appendTo($("form:first"));
+
     });
 
-    //转账
-    function showregion() {
-        //alert(ztid);
-        $("#zhuantiedit").show();
-    }
-    function regionclose() {
-        $("#zhuantiedit").hide();
-    }
+
 </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-<div id="zhuantiedit">
-    <a href="javascript:regionclose();">×</a>
-    <p>固定消费预览（<asp:Label ID="RegionCount" runat="server"></asp:Label>）</p>
+<asp:Content ID="Content3" ContentPlaceHolderID="content" Runat="Server">
+<div class="r_title">
+    <h1>添加消费</h1>
+    <ul>
+        <li><a href="javascript:history.go(-1);"><img src="theme/images/dot_19.gif" title="返回" /> 返回</a></li>
+    </ul>
+</div>
+<div id="dialog" title="固定消费(<%=RegionCount %>)">
     <asp:GridView ID="RegionList" runat="server" Width="100%" BorderWidth="1px"></asp:GridView>
     <asp:Button ID="Button2" runat="server" Text="确认提交" CssClass="btninput" Width="80px" OnClick="Buttom2_Click" />
 </div>
-<div id="content">
-    <!--内容开始-->  
-    <div class="maindiv userdiv">
-        <div class="title"><img src="/Images/Others/add.png" alt="" title="" />&nbsp;&nbsp;智能添加消费</div>
-        <table cellspacing="0" border="0" style="width:100%;" class="tableuser">
-            <tr>
-                <th></th>
-                <td></td>
-                <td></td>
-            </tr>
+<div id="r_content">
+    <!--内容开始-->
+    <div class="r_add">
+        <table border="0" style="width:100%;" class="tableform">
             <tr>
                 <th style="width:14%;">消费分类</th>
                 <td style="width:110px;">
@@ -405,7 +337,7 @@
             </tr>
             <tr class="region2">
                 <th>购买日期</th>
-                <td colspan="2"><asp:TextBox ID="ItemBuyDate1" runat="server" MaxLength="10"></asp:TextBox>&nbsp;-&nbsp;<asp:TextBox ID="ItemBuyDate2" runat="server" MaxLength="10"></asp:TextBox></td>
+                <td colspan="2"><asp:TextBox ID="ItemBuyDate1" runat="server" MaxLength="10"></asp:TextBox>&nbsp;-&nbsp;<asp:TextBox ID="ItemBuyDate2" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <th>用户专题</th>
@@ -425,23 +357,19 @@
             <tr>
                 <th></th>
                 <td><asp:Button ID="SubmitButtom" runat="server" Text="提交" OnClick="SubmitButtom_Click" CssClass="btninput" /></td>
-                <td>&nbsp;&nbsp;&nbsp;<asp:Button ID="Button1" runat="server" Text="X2" OnClick="Buttom1_Click" CssClass="btninput" UseSubmitBehavior="false" Width="50px" /></td>
-            </tr>
-            <tr>
-                <th></th>
-                <td></td>
-                <td></td>
+                <td>&nbsp;&nbsp;&nbsp;<asp:Button ID="Button1" runat="server" Text="X2" OnClick="Buttom1_Click" CssClass="btninput btninput2" UseSubmitBehavior="false" /></td>
             </tr>
         </table>
     </div>
-    <div class="h10"></div>
     <!--内容结束-->
 </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="js" Runat="Server">
+<asp:Content ID="Content4" ContentPlaceHolderID="end" Runat="Server">
 <script type="text/javascript">
     $(function () {
-        $("#menu table tr td").eq(4).addClass("on");
+        //设置当前菜单
+        $(".menu_nav li").eq(1).addClass("cur");
+        $("#menu_div .system_ul li").eq(1).addClass("cur");
     });
 </script>
 </asp:Content>

@@ -34,6 +34,14 @@ namespace AALife.BLL
         }
 
         /// <summary>
+        /// 根据用户名和密码取用户
+        /// </summary>
+        public UserInfo GetUserByUserPassword(string userName, string userPassword)
+        {
+            return dal.GetUserByUserPassword(userName, userPassword);
+        }
+
+        /// <summary>
         /// 根据时间段取用户列表
         /// </summary>
         public DataTable GetUserListByDate(DateTime beginDate, DateTime endDate)
@@ -103,6 +111,14 @@ namespace AALife.BLL
         public bool DeleteUser(int userId)
         {
             return dal.DeleteUser(userId);
+        }
+
+        /// <summary>
+        /// 删除用户数据
+        /// </summary>
+        public bool DeleteUserData(int userId)
+        {
+            return dal.DeleteUserData(userId);
         }
 
         /// <summary>

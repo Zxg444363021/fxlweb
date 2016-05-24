@@ -2,7 +2,7 @@
 using AALife.Model;
 using System;
 
-public partial class UserLogin : FirstPage
+public partial class Web2016_UserLogin : FirstPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -43,7 +43,7 @@ public partial class UserLogin : FirstPage
         {
             Session["TodayDate"] = DateTime.Now.ToString("yyyy-MM-dd");
 
-            UserInfo user = bll.GetUserByUserName(userName);
+            UserInfo user = bll.GetUserByUserPassword(userName, userPassword);
             UserHelper.SaveSession(user);
 
             Response.Cookies["ThemeCookie"].Value = user.UserTheme;

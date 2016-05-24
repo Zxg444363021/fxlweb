@@ -1,5 +1,6 @@
 ﻿using AALife.BLL;
 using AALife.Model;
+using NLog;
 using System;
 using System.Data;
 using System.Transactions;
@@ -7,6 +8,7 @@ using System.Web;
 
 public partial class AALifeWeb_SyncNewUser : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private UserTableBLL bll = new UserTableBLL();
     private CardTableBLL card_bll = new CardTableBLL();
 
@@ -49,7 +51,10 @@ public partial class AALifeWeb_SyncNewUser : System.Web.UI.Page
             user.MoneyStart = Convert.ToDecimal(userMoney);
             user.IsUpdate = 1;
         }
-                
+        
+        //写日志
+        log.Info(string.Format(" UserInfo -> {0}", user.ToString()));
+                        
         string result = "{";
 
         bool success = bll.UserExists(userName);

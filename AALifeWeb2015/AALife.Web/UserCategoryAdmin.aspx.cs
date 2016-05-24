@@ -5,7 +5,7 @@ using AALife.BLL;
 using AALife.Model;
 using System.Transactions;
 
-public partial class UserCategoryAdmin : BasePage
+public partial class UserCategoryAdmin : WebPage
 {
     private UserCategoryTableBLL bll = new UserCategoryTableBLL();
     private ItemTableBLL item_bll = new ItemTableBLL();
@@ -29,6 +29,8 @@ public partial class UserCategoryAdmin : BasePage
 
         this.CatTypeList.DataSource = catTypeList;
         this.CatTypeList.DataBind();
+
+        this.CatIdEmpIns.Text = (catTypeList.Rows.Count + 1).ToString();
     } 
 
     //类别更新操作
@@ -112,6 +114,22 @@ public partial class UserCategoryAdmin : BasePage
     {
         CatTypeList.EditIndex = e.NewEditIndex;
         BindGrid();
+    }
+
+    //行数据绑定
+    protected void CatTypeList_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.RowIndex % 2 == 0)
+            {
+                e.Row.CssClass = "trcolor1";
+            }
+            else
+            {
+                e.Row.CssClass = "trcolor2";
+            }
+        }
     }
 
     //添加类别操作

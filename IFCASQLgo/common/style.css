@@ -1,0 +1,21 @@
+﻿body { font-family: "微软雅黑"; font-size: 11px; }
+pre { font-family: "微软雅黑"; font-size: 11px; font-weight: normal; display: table-cell; }
+input, select { width: 100%; border: 0 transparent; border: none; font-family: "微软雅黑"; font-size: 11px; margin: 0; padding: 0; }
+fieldset { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+table { border: 1px solid #CCC; border-collapse: collapse; }
+a { text-decoration: none; outline: none; }
+td { border: 1px solid #CCC; white-space: nowrap; padding: 1px 2px; }
+.th { background-color: #EDEDFF; }
+.th pre, .th { /*font-weight: bold;*/ }
+.main { margin-bottom: 10px; display: none; }
+.autoscroll { overflow-y: hidden; overflow-x: auto; height: 100%; width: inherit; margin-bottom: 2px; }
+.txtdata p { margin: 0; }
+.tabdata { margin-top: 2px; }
+.txtmain { clear: both; }
+.btncss { width: 28px; background-color: #999; color: #FFF; font-size: 11px; padding: 1px; }
+.tips { background-color: #FFFFE1; }
+input[type=checkbox], .addbtn { width: 12px; height: 12px; padding: 1px; }
+.txtsql { background-color: #FEE; margin: 5px 0; }
+.txttab { float: left; margin-right: 2px; }
+.btncol { line-height: 0; width: 14px; height: 14px; background-color: #999; color: #FFF; font-size: 16px; padding: 0; }
+.btntab, .btntab td { border: 0; float: left; }

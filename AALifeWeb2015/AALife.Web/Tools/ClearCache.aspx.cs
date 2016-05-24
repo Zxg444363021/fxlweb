@@ -17,5 +17,15 @@ public partial class ClearCache : System.Web.UI.Page
         {
             Response.Cookies["CardID"].Expires = DateTime.Now.AddDays(-1);
         }
+
+        if (Request.Cookies["UserCookie"] != null)
+        {
+            Response.Cookies["UserCookie"].Expires = DateTime.Now.AddDays(-1);
+        }
+
+        if (Request.Cookies["ThemeCookie"] != null)
+        {
+            Response.Cookies["ThemeCookie"].Expires = DateTime.Now.AddDays(-1);
+        }
     }
 }

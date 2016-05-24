@@ -5,7 +5,7 @@ using AALife.BLL;
 using AALife.Model;
 using System.Transactions;
 
-public partial class UserCardAdmin : BasePage
+public partial class UserCardAdmin : WebPage
 {
     private CardTableBLL bll = new CardTableBLL();
     private ItemTableBLL item_bll = new ItemTableBLL();
@@ -17,6 +17,8 @@ public partial class UserCardAdmin : BasePage
     protected void Page_Load(object sender, EventArgs e)
     {
         userId = Convert.ToInt32(Session["UserID"]);
+        
+        BindTotal();
 
         if (!IsPostBack)
         {
@@ -27,6 +29,10 @@ public partial class UserCardAdmin : BasePage
             this.CardDownEdit.DataTextField = "CardName";
             this.CardDownEdit.DataValueField = "CDID";
             this.CardDownEdit.DataBind();
+
+            //转账日期
+            this.CardDateEdit.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            this.CardDateEdit.Attributes.Add("ReadOnly", "readonly");
         }
     }
 
@@ -37,11 +43,18 @@ public partial class UserCardAdmin : BasePage
         this.CardList.DataSource = lists;
         this.CardList.DataBind();
 
+        this.CardIdEmpIns.Text = (lists.Rows.Count + 1).ToString();
+    }
+
+    //计算总计
+    private void BindTotal()
+    {
+        DataTable lists = bll.GetCardList(userId);
         foreach (DataRow dr in lists.Rows)
         {
             TotalMoney += Convert.ToDouble(dr["CardBalance"]);
         }
-    } 
+    }
 
     //钱包更新操作
     protected void CardList_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -56,7 +69,7 @@ public partial class UserCardAdmin : BasePage
 
         if (cardName == "")
         {
-            Utility.Alert(this, "名称未填写！");
+            Utility.Alert(this, "钱包名称未填写！");
             return;
         }
 
@@ -66,7 +79,16 @@ public partial class UserCardAdmin : BasePage
             return;
         }
 
-        decimal cardMoney = Convert.ToDecimal(cardMoneyBox) + moneyStartHid - cardBalanceHid;
+        decimal cardMoney = 0m;
+        if (moneyStartHid == 0)
+        {
+            cardMoney = Convert.ToDecimal(cardMoneyBox) - cardBalanceHid;
+        }
+        else
+        {
+            cardMoney = Convert.ToDecimal(cardMoneyBox) + moneyStartHid - cardBalanceHid;
+        }
+
         bool IsUpdate = Session["IsUpdate"].ToString() == "1";
         if (!IsUpdate)
         {
@@ -141,7 +163,23 @@ public partial class UserCardAdmin : BasePage
         if (cardId == 0)
         {
             cardNameBox.Attributes.Add("readonly", "readonly");
-            cardNameBox.Style.Add("background", "#F4F4F4");
+            cardNameBox.CssClass = "celldisable";
+        }
+    }
+
+    //行数据绑定
+    protected void CardList_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.RowIndex % 2 == 0)
+            {
+                e.Row.CssClass = "trcolor1";
+            }
+            else
+            {
+                e.Row.CssClass = "trcolor2";
+            }
         }
     }
 
@@ -153,7 +191,7 @@ public partial class UserCardAdmin : BasePage
 
         if (cardName == "")
         {
-            Utility.Alert(this, "名称未填写！");
+            Utility.Alert(this, "钱包名称未填写！");
             return;
         }
 
@@ -172,7 +210,7 @@ public partial class UserCardAdmin : BasePage
 
         CardInfo card = bll.GetCardByCardName(userId, cardName);
         card.CardName = cardName;
-        card.CardMoney = Convert.ToDecimal(cardMoney);
+        card.MoneyStart = Convert.ToDecimal(cardMoney);
         card.UserID = userId;
         card.CardLive = 1;
         card.Synchronize = 1;
@@ -240,6 +278,7 @@ public partial class UserCardAdmin : BasePage
         int cardId = Convert.ToInt32(this.CardIDEditHid.Value);
         int toCardId = Convert.ToInt32(this.CardDownEdit.SelectedValue);
         string cardMoney = this.CardMoneyEdit.Text.Trim();
+        string cardDate = this.CardDateEdit.Text;
 
         if (!ValidHelper.CheckDouble(cardMoney))
         {
@@ -326,7 +365,7 @@ public partial class UserCardAdmin : BasePage
             ZhuanZhangInfo zhuan = new ZhuanZhangInfo();
             zhuan.ZhuanZhangFrom = cardId;
             zhuan.ZhuanZhangTo = toCardId;
-            zhuan.ZhuanZhangDate = DateTime.Now;
+            zhuan.ZhuanZhangDate = Convert.ToDateTime(cardDate);
             zhuan.ZhuanZhangMoney = Convert.ToDecimal(cardMoney);
             zhuan.ZhuanZhangLive = 1;
             zhuan.Synchronize = 1;
@@ -345,4 +384,31 @@ public partial class UserCardAdmin : BasePage
 
         Response.Redirect("UserCardAdmin.aspx");
     }
+
+    //首页显示CheckBox
+    protected void CardShowBox_CheckedChanged(object sender, EventArgs e)
+    {
+        CheckBox cb = (CheckBox)sender;
+        int cardId = Convert.ToInt32(((HiddenField)cb.Parent.FindControl("CardIDHid")).Value);
+        
+        CardInfo card = bll.GetCardByCardId(userId, cardId);
+        card.Synchronize = 1;
+        card.ModifyDate = DateTime.Now;
+
+        if (cb.Checked)
+        {
+            card.CardShow = 1;
+        }
+        else
+        {
+            card.CardShow = 0;
+        }
+
+        bool success = bll.UpdateCard(card);
+        if (!success)
+        {
+            Utility.Alert(this, "更新失败！");
+        }
+    }
+
 }

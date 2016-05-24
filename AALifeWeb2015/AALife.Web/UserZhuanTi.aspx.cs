@@ -5,7 +5,7 @@ using AALife.BLL;
 using AALife.Model;
 using System.Transactions;
 
-public partial class UserZhuanTi : BasePage
+public partial class UserZhuanTi : WebPage
 {
     private ZhuanTiTableBLL bll = new ZhuanTiTableBLL();
     private ItemTableBLL item_bll = new ItemTableBLL();
@@ -97,6 +97,22 @@ public partial class UserZhuanTi : BasePage
     {
         List.EditIndex = e.NewEditIndex;
         BindGrid();
+    }
+
+    //行数据绑定
+    protected void List_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.RowIndex % 2 == 0)
+            {
+                e.Row.CssClass = "trcolor1";
+            }
+            else
+            {
+                e.Row.CssClass = "trcolor2";
+            }
+        }
     }
 
     //添加操作

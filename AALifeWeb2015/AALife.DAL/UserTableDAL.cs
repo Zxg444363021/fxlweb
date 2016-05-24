@@ -19,7 +19,8 @@ namespace AALife.DAL
         private static readonly string PARM_KEYWORDS = "@Keywords";
 
         private static readonly string SQL_SELECT_USER_BY_USER_ID = string.Format(@"select * from UserTable with(nolock) where UserID = {0}", PARM_USER_ID);
-        private static readonly string SQL_SELECT_USER_BY_USER_NAME = string.Format(@"select * from UserTable with(nolock) where UserName = {0}", PARM_USER_NAME);
+        private static readonly string SQL_SELECT_USER_BY_USER_NAME = string.Format(@"select * from UserTable with(nolock) where UserName collate Chinese_PRC_CS_AS_WS = {0}", PARM_USER_NAME);
+        private static readonly string SQL_SELECT_USER_BY_USER_PASSWORD = string.Format(@"select * from UserTable with(nolock) where UserName collate Chinese_PRC_CS_AS_WS = {0} and UserPassword = {1}", PARM_USER_NAME, PARM_USER_PASSWORD);
         private static readonly string SQL_SELECT_USER_LIST_BY_DATE = string.Format(@"select * from UserTable with(nolock) where CreateDate between {0} and {1} order by UserID desc", PARM_BEGIN_DATE, PARM_END_DATE);
         private static readonly string SQL_SELECT_USER_LIST = "select * from UserTable order by UserID desc";
         private static readonly string SQL_SELECT_USER_LIST_BY_KEYWORDS = "GetUserListByKeywords_v5";
@@ -27,8 +28,9 @@ namespace AALife.DAL
         private static readonly string SQL_INSERT_USER = "InsertUser_v5";
         private static readonly string SQL_UPDATE_USER = "UpdateUser_v5";
         private static readonly string SQL_SELECT_USER_EXISTS = string.Format(@"select count(0) from UserTable with(nolock) where UserName = {0}", PARM_USER_NAME);
-        private static readonly string SQL_SELECT_USER_LOGIN = string.Format(@"select count(0) from UserTable with(nolock) where UserName = {0} and UserPassword = {1}", PARM_USER_NAME, PARM_USER_PASSWORD);
+        private static readonly string SQL_SELECT_USER_LOGIN = string.Format(@"select count(0) from UserTable with(nolock) where UserName collate Chinese_PRC_CS_AS_WS = {0} and UserPassword = {1}", PARM_USER_NAME, PARM_USER_PASSWORD);
         private static readonly string SQL_DELETE_USER = "DeleteUser_v5";
+        private static readonly string SQL_DELETE_USER_DATA = "DeleteUserData_v5";
         private static readonly string SQL_SELECT_USER_WORK_DAY = "select * from WorkDayTable";
         private static readonly string SQL_UPDATE_USER_LIST_WEB_BACK = string.Format(@"update UserTable set Synchronize = 0 where UserID = {0}", PARM_USER_ID);
         private static readonly string SQL_UPDATE_SYNC_BY_USER_ID = "UpdateSyncByUserId_v5";
@@ -83,6 +85,31 @@ namespace AALife.DAL
             parm.Value = userName;
 
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.Text, SQL_SELECT_USER_BY_USER_NAME, parm))
+            {
+                while (rdr.Read())
+                {
+                    user = DataToModel(rdr);
+                }
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// 根据用户名和密码取用户
+        /// </summary>
+        public UserInfo GetUserByUserPassword(string userName, string userPassword)
+        {
+            UserInfo user = new UserInfo();
+
+            SqlParameter[] parms = { 
+                    new SqlParameter(PARM_USER_NAME, SqlDbType.NVarChar, 20), 
+                    new SqlParameter(PARM_USER_PASSWORD, SqlDbType.NVarChar, 20) 
+            };
+            parms[0].Value = userName;
+            parms[1].Value = userPassword;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.Text, SQL_SELECT_USER_BY_USER_PASSWORD, parms))
             {
                 while (rdr.Read())
                 {
@@ -208,8 +235,6 @@ namespace AALife.DAL
         /// </summary>
         public bool UserLogin(string userName, string userPassword)
         {
-            log.Info(string.Format("UserLogin: {0}, {1}", userName, userPassword));
-
             SqlParameter[] parms = { 
                     new SqlParameter(PARM_USER_NAME, SqlDbType.NVarChar, 20), 
                     new SqlParameter(PARM_USER_PASSWORD, SqlDbType.NVarChar, 20) 
@@ -231,6 +256,19 @@ namespace AALife.DAL
             parm.Value = userId;
 
             int result = SqlHelper.ExecuteNonQuery(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_DELETE_USER, parm);
+
+            return result > 0;
+        }
+
+        /// <summary>
+        /// 删除用户数据
+        /// </summary>
+        public bool DeleteUserData(int userId)
+        {
+            SqlParameter parm = new SqlParameter(PARM_USER_ID, SqlDbType.Int);
+            parm.Value = userId;
+
+            int result = SqlHelper.ExecuteNonQuery(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_DELETE_USER_DATA, parm);
 
             return result > 0;
         }

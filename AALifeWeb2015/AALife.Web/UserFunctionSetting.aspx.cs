@@ -1,140 +1,76 @@
 ﻿using System;
 using AALife.BLL;
 using AALife.Model;
+using System.Data;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
-public partial class UserFunctionSetting : BasePage
+public partial class UserFunctionSetting : WebPage
 {
     private UserTableBLL bll = new UserTableBLL();
     private int userId = 0;
+    private MenuHelper menuHelper = new MenuHelper();
 
     protected void Page_Load(object sender, EventArgs e)
     {
         userId = Convert.ToInt32(Session["UserID"]);
+        
+        AddCheckBox();
 
         if (!IsPostBack)
         {
-            PopulateControls();
+            BindMenuList();
+
+            string menu = Session["UserFunction"].ToString();
+            menuHelper.PopulateControls(menu);
         }
     }
 
-    //初始数据
-    private void PopulateControls()
+    //显示菜单
+    private void BindMenuList()
     {
-        string[] arr = Session["UserFunction"].ToString().Split(',');
-        for (int i = 0; i < arr.Length; i++)
-        {
-            switch (arr[i])
-            {
-                case "1":
-                    this.FenLeiZongJi.Checked = true;
-                    break;
-                case "2":
-                    this.ItemNumTop.Checked = true;
-                    break;
-                case "3":
-                    this.ItemPriceTop.Checked = true;
-                    break;
-                case "4":
-                    this.ItemDateTop.Checked = true;
-                    break;
-                case "5":
-                    this.QuJianTongJi.Checked = true;
-                    break;
-                case "6":
-                    this.TuiJianFenXi.Checked = true;
-                    break;
-                case "7":
-                    this.BiJiaoFenXi.Checked = true;
-                    break;
-                case "8":
-                    this.JianGeFenXi.Checked = true;
-                    break;
-                case "9":
-                    this.TianShuFenXi.Checked = true;
-                    break;
-                case "10":
-                    this.JiaGeFenXi.Checked = true;
-                    break;
-                case "11":
-                    this.JieHuanFenXi.Checked = true;
-                    break;
-                case "12":
-                    this.QuWeiTongJi.Checked = true;
-                    break;
-                case "13":
-                    this.UserAdmin.Checked = true;
-                    break;
-                case "14":
-                    this.UserBoundAdmin.Checked = true;
-                    break;
-                case "15":
-                    this.UserCategoryAdmin.Checked = true;
-                    break;
-                case "16":
-                    this.UserDataAdmin.Checked = true;
-                    break;
-                case "17":
-                    this.UserFunction.Checked = true;
-                    break;
-                case "18":
-                    this.SearchItem.Checked = true;
-                    break;
-                case "19":
-                    this.UserLogout.Checked = true;
-                    break;
-                case "20":
-                    this.UserZhuanTi.Checked = true;
-                    break;
-                case "21":
-                    this.AboutUs.Checked = true;
-                    break;
-                case "22":
-                    this.UserCardAdmin.Checked = true;
-                    break;
-            }
-        }
+        UserQueryTableBLL query_bll = new UserQueryTableBLL();
+        DataTable dt = query_bll.GetUserQueryList(userId);
+        menuHelper.SetQueryData(dt);
+
+        DataTable menus = menuHelper.GetMenuData();
+
+        menus.DefaultView.RowFilter = "MenuType='system'";
+        this.SystemMenu.DataSource = menus;
+        this.SystemMenu.DataBind();
+
+        menus.DefaultView.RowFilter = "MenuType='query'";
+        this.QueryList.DataSource = menus;
+        this.QueryList.DataBind();
+
+        menus.DefaultView.RowFilter = "MenuType='user'";
+        this.UserMenu.DataSource = menus;
+        this.UserMenu.DataBind();
+
+        AddCheckBox();
     }
 
+    //添加checkbox
+    private void AddCheckBox()
+    {
+        menuHelper.AddCheckBox(this.SystemMenu);
+        menuHelper.AddCheckBox(this.QueryList);
+        menuHelper.AddCheckBox(this.UserMenu);
+    }
+    
+    //checkbox事件
     protected void Button1_Click(object sender, EventArgs e)
-    { 
+    {
         string value = "";
 
-        if (this.FenLeiZongJi.Checked) value += "1,";
-        if (this.ItemNumTop.Checked) value += "2,";
-        if (this.ItemPriceTop.Checked) value += "3,";
-        if (this.ItemDateTop.Checked) value += "4,";
-        if (this.QuJianTongJi.Checked) value += "5,";
-        if (this.TuiJianFenXi.Checked) value += "6,";
-
-        if (this.BiJiaoFenXi.Checked) value += "7,";
-        if (this.JianGeFenXi.Checked) value += "8,";
-        if (this.TianShuFenXi.Checked) value += "9,";
-        if (this.JiaGeFenXi.Checked) value += "10,";
-        if (this.JieHuanFenXi.Checked) value += "11,";
-        if (this.QuWeiTongJi.Checked) value += "12,";
-
-        if (this.UserAdmin.Checked) value += "13,";
-        if (this.UserBoundAdmin.Checked) value += "14,";
-        if (this.UserDataAdmin.Checked) value += "16,";
-        if (this.UserFunction.Checked) value += "17,";
-        if (this.UserCardAdmin.Checked) value += "22,";
-
-        if (this.UserCategoryAdmin.Checked) value += "15,";
-        if (this.SearchItem.Checked) value += "18,";
-        if (this.UserLogout.Checked) value += "19,";
-        if (this.UserZhuanTi.Checked) value += "20,";
-        if (this.AboutUs.Checked) value += "21,";
-
-        if (value != "")
+        try
         {
-            value = value.Remove(value.Length - 1);
-
-            string[] arr = value.Split(',');
-            if (arr.Length > 4)
-            {
-                Utility.Alert(this, "选择数量不能大于4个。");
-                return;
-            }
+            value = menuHelper.GetSaveMenu();
+        } catch (Exception ex)
+        {
+            Utility.Alert(this, ex.Message, "UserFunctionSetting.aspx");
+            return;
         }
 
         UserInfo user = bll.GetUserByUserId(userId);
@@ -146,11 +82,12 @@ public partial class UserFunctionSetting : BasePage
         if (success)
         {
             Session["UserFunction"] = value;
-            Utility.Alert(this, "修改成功。", "Default.aspx");
+            Response.Redirect("UserFunctionSetting.aspx");
         }
         else
         {
             Utility.Alert(this, "修改失败！");
         }
     }
+
 }

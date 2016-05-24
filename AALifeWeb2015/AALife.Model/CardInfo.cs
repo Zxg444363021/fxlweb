@@ -20,6 +20,7 @@ namespace AALife.Model
             CDID = 0;
             UserID = 0;
             MoneyStart = 0m;
+            CardShow = 0;
         }
         #region Model
         private int _cardid;
@@ -33,6 +34,7 @@ namespace AALife.Model
         private int? _cdid;
         private int _userid;
         private decimal _moneystart;
+        private byte _cardShow;
         /// <summary>
         /// 编号
         /// </summary>
@@ -120,6 +122,14 @@ namespace AALife.Model
         {
             set { _moneystart = value; }
             get { return _moneystart; }
+        }
+        /// <summary>
+        /// 首页显示
+        /// </summary>
+        public byte CardShow
+        {
+            set { _cardShow = value; }
+            get { return _cardShow; }
         }
         #endregion Model
 

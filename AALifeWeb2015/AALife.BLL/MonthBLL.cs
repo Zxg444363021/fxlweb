@@ -201,6 +201,14 @@ namespace AALife.BLL
         }
 
         /// <summary>
+        /// 取商品收支借还列表V6
+        /// </summary>
+        public DataTable GetShouZhiJieHuanListV6(int userId, DateTime itemBuyDate)
+        {
+            return dal.GetShouZhiJieHuanListV6(userId, itemBuyDate);
+        }
+
+        /// <summary>
         /// 根据时间段取活动消费统计
         /// </summary>
         public DataTable GetAdminTongJiHuoDong(DateTime beginDate, DateTime endDate)

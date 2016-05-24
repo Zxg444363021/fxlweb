@@ -5,10 +5,14 @@ using System.Web;
 using AALife.BLL;
 using AALife.Model;
 
-public class SyncUserImage : IHttpHandler {
+public class SyncUserImage : IHttpHandler 
+{
     
-    public void ProcessRequest (HttpContext context) {
+    public void ProcessRequest (HttpContext context) 
+    {
+
         context.Response.ContentType = "text/plain";
+        context.Response.Charset = "utf-8";
 
         int count = context.Request.Files.Count;
 
@@ -51,6 +55,7 @@ public class SyncUserImage : IHttpHandler {
                 context.Response.Write(0);
             }
         }
+        
     }
  
     public bool IsReusable 

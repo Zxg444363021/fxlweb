@@ -93,6 +93,11 @@ namespace AALife.Model
         }
         #endregion Model
 
+        public override string ToString()
+        {
+            return string.Format("OAuthID:{0}, {1}, {2}, UserID:{3}, OldUserID:{4}, {5}", OAuthID, OpenID, AccessToken, UserID, OldUserID, OAuthFrom);
+        }
+
     }
 }
 

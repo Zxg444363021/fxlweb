@@ -12,7 +12,7 @@ public class AdminPage : BasePage
     {
         if (!object.Equals(Session["UserLevel"], "9"))
         {
-            Response.Write("<script>alert('管理页面您无访问权限！');window.location.href='UserLogin.aspx?url=Default.aspx';</script>");
+            Response.Write("<script>alert('管理页面您无访问权限！');window.location.href='/UserLogin.aspx?url=Default.aspx';</script>");
             Response.End();
         }
     }

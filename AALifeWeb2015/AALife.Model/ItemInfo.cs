@@ -179,6 +179,11 @@ namespace AALife.Model
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return string.Format("ItemID:{0}, ItemAppID:{1}, CategoryTypeID:{2}, {3}, {4}, {5}, {6}, CardID:{7}", ItemID, ItemAppID, CategoryTypeID, ItemName, ItemPrice, ItemBuyDate, ItemType, CardID);
+        }
+
     }
 }
 

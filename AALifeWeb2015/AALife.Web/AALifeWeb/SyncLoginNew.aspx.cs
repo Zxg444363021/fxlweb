@@ -22,7 +22,7 @@ public partial class AALifeWeb_SyncLoginNew : System.Web.UI.Page
         bool success = user_bll.UserLogin(userName, userPassword);
         if (success)
         {
-            UserInfo user = user_bll.GetUserByUserName(userName);
+            UserInfo user = user_bll.GetUserByUserPassword(userName, userPassword);
 
             decimal userMoney = user.UserMoney;
             if (isUpdate == "1")

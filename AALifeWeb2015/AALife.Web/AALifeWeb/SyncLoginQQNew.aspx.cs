@@ -4,9 +4,11 @@ using System;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Transactions;
+using NLog;
 
 public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private ItemTableBLL bll = new ItemTableBLL();
     private UserTableBLL user_bll = new UserTableBLL();
     private OAuthTableBLL oauth_bll = new OAuthTableBLL();
@@ -16,24 +18,13 @@ public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
         string userName = Request.Form["username"] ?? "";
         string openId = Request.Form["openid"].ToString();
         string accessToken = Request.Form["accesstoken"].ToString();
-        string oAuthFrom = Request.Form["oauthfrom"].ToString();
+        string oAuthFrom = "sjqq";
         string nickName = Request.Form["nickname"].ToString();
         string userImage = Request.Form["userimage"].ToString();
+        string userFrom = Request.Form["userfrom"].ToString() ?? Request.Form["oauthfrom"].ToString();
         int type = Convert.ToInt32(Request.Form["type"]);
         string isUpdate = Request.Form["isupdate"] ?? "0";
-
-        string userFrom = "";
-        if (oAuthFrom.Length > 4)
-        {
-            userFrom = oAuthFrom.Replace("_", "");
-            userFrom = userFrom.Insert(4, "_");
-            oAuthFrom = userFrom.Substring(0, 4);
-        }
-        else
-        {
-            userFrom = oAuthFrom;
-        }
-
+        
         UserInfo user = user_bll.GetUserByUserName(userName);
         if (userName == "") user.UserName = UserHelper.GetUserName(oAuthFrom);
         if (userName == "") user.UserPassword = "aalife";
@@ -44,6 +35,9 @@ public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
         user.ModifyDate = DateTime.Now;
         user.IsUpdate = Convert.ToByte(isUpdate);
 
+        //写日志
+        log.Info(string.Format(" UserInfo -> {0}", user.ToString()));
+            
         OAuthInfo oauth = new OAuthInfo();
         oauth.OpenID = openId;
         oauth.AccessToken = accessToken;
@@ -51,6 +45,9 @@ public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
         oauth.OAuthBound = 1;
         oauth.ModifyDate = DateTime.Now;
 
+        //写日志
+        log.Info(string.Format(" OAuthInfo -> {0}", oauth.ToString()));
+            
         bool success = oauth_bll.OAuthLoginByOpenId(oauth.OpenID);
         if (!success)
         {
@@ -63,7 +60,7 @@ public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
                 else
                 {
                     success = user_bll.InsertUser(user);
-                    user = user_bll.GetUserByUserName(user.UserName);
+                    user = user_bll.GetUserByUserPassword(user.UserName, user.UserPassword);
                 }
                 
                 oauth.UserID = user.UserID;

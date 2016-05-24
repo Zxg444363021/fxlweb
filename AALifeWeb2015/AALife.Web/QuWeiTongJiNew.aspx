@@ -1,4 +1,4 @@
-﻿<%@ Page Title="趣味统计" Language="C#" AutoEventWireup="true" CodeFile="QuWeiTongJi.aspx.cs" Inherits="QuWeiTongJi" %>
+﻿<%@ Page Title="趣味统计" Language="C#" AutoEventWireup="true" CodeFile="QuWeiTongJiNew.aspx.cs" Inherits="QuWeiTongJiNew" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,8 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<link href="/common/master-sj.css" rel="stylesheet" type="text/css" />
-<link href="/common/main.css" rel="stylesheet" type="text/css" />
+<link href="/Web2015/common/master-sj.css" rel="stylesheet" type="text/css" />
+<link href="/Web2015/common/main.css" rel="stylesheet" type="text/css" />
 <% if(Request.QueryString["flag"]=="1") { %>
 <style type="text/css">
 body { background: #FAFAFA; font-size: 14px; }

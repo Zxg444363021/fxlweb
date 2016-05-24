@@ -13,7 +13,7 @@ public class Utility
     {
         string key = "AlertMessage";
         string script = String.Format("alert('{0}');", msg);
-        page.ClientScript.RegisterStartupScript(typeof(Page), key, script, true);
+        page.ClientScript.RegisterStartupScript(typeof(Page), key, GetJavaScript(script), true);
     }
 
     //进入页面前提示转向
@@ -21,15 +21,21 @@ public class Utility
     {
         string key = "AlertMessage";
         string script = String.Format("alert('{0}');window.location='{1}';", msg, url);
-        page.ClientScript.RegisterStartupScript(typeof(Page), key, script, true);//RegisterClientScriptBlock
+        page.ClientScript.RegisterStartupScript(typeof(Page), key, GetJavaScript(script), true);//RegisterClientScriptBlock
     }
-
+    
     //confirm
     public static void Confirm(Page page, string msg, string page1, string page2)
     {
         string key = "ConfirmMessage";
         string script = String.Format("confirm('{0}')?window.location='{1}':window.location='{2}';", msg, page1, page2);
-        page.ClientScript.RegisterStartupScript(typeof(Page), key, script, true);
+        page.ClientScript.RegisterStartupScript(typeof(Page), key, GetJavaScript(script), true);
+    }
+
+    //包装script
+    private static string GetJavaScript(string script)
+    {
+        return "setTimeout(function(){" + script + "}, 0)";
     }
 
     //替换sql字符
@@ -77,12 +83,12 @@ public class Utility
     }
 
     //传入日期处理
-    public static DateTime GetRequestDate(string requestdate)
+    public static DateTime GetRequestDate(string date)
     {
-        if (requestdate != null && requestdate != "" && ValidHelper.CheckDate(requestdate))
+        if (date != null && date != "" && ValidHelper.CheckDate(date))
         {
-            HttpContext.Current.Session["TodayDate"] = requestdate;
-            return Convert.ToDateTime(requestdate);
+            HttpContext.Current.Session["TodayDate"] = date;
+            return Convert.ToDateTime(date);
         } 
         else if (HttpContext.Current.Session["TodayDate"] != null)
         {
@@ -92,6 +98,25 @@ public class Utility
         {
             HttpContext.Current.Session["TodayDate"] = DateTime.Now.ToString("yyyy-MM-dd");
             return DateTime.Now;
+        }
+    }
+
+    //传入日期处理
+    public static DateTime GetRequestDate2(string date)
+    {
+        if (date != null && date != "" && ValidHelper.CheckDate(date))
+        {
+            //HttpContext.Current.Session["TodayDate"] = date;
+            return Convert.ToDateTime(date);
+        }
+        else if (HttpContext.Current.Session["TodayDate"] != null)
+        {
+            return Convert.ToDateTime(HttpContext.Current.Session["TodayDate"]).AddMonths(-1);
+        }
+        else
+        {
+            //HttpContext.Current.Session["TodayDate"] = DateTime.Now.ToString("yyyy-MM-dd");
+            return DateTime.Now.AddMonths(-1);
         }
     }
 

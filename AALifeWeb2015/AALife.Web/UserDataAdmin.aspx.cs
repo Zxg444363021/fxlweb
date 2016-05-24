@@ -8,13 +8,14 @@ using System.Text;
 using AALife.BLL;
 using AALife.Model;
 
-public partial class UserDataAdmin : BasePage
+public partial class UserDataAdmin : WebPage
 {
     private ItemTableBLL bll = new ItemTableBLL();
     private UserCategoryTableBLL cat_bll = new UserCategoryTableBLL();
     private ZhuanTiTableBLL zt_bll = new ZhuanTiTableBLL();
     private CardTableBLL card_bll = new CardTableBLL();
     private int userId = 0;
+    private string userName = "";
     private DataTable all = new DataTable();
     private DataTable itemTypeList = new DataTable();
     private DataTable catTypeList = new DataTable();
@@ -23,18 +24,34 @@ public partial class UserDataAdmin : BasePage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        userId = Convert.ToInt32(Session["UserID"]); 
+        userId = Convert.ToInt32(Session["UserID"]);
+        userName = Session["UserName"].ToString();
         itemTypeList = bll.GetItemTypeList();
         catTypeList = cat_bll.GetUserCategoryList(userId);
         zhuanTiList = zt_bll.GetZhuanTiList(userId);
-        cardList = card_bll.GetCardList(userId);              
+        cardList = card_bll.GetCardList(userId);
+
+        if (!IsPostBack)
+        {
+            this.ItemBuyDate1.Attributes.Add("readonly", "readonly");
+            this.ItemBuyDate2.Attributes.Add("readonly", "readonly");
+            
+            string today = DateTime.Now.ToString("yyyy-MM-dd");
+            string first = DateHelper.GetMonthFirst(DateTime.Now).ToString("yyyy-MM-dd");
+
+            this.ItemBuyDate1.Text = first;
+            this.ItemBuyDate2.Text = today;            
+        }
     }
     
     //导出数据
     protected void Button2_Click(object sender, EventArgs e)
     {
-        DataTable dt = bll.GetItemExportList(userId);
-        string fileName = "AA生活记账数据导出(" + userId + ").xlsx";
+        DateTime itemBuyDate1 = Convert.ToDateTime(this.ItemBuyDate1.Text);
+        DateTime itemBuyDate2 = Convert.ToDateTime(this.ItemBuyDate2.Text);
+
+        DataTable dt = bll.GetItemExportList(userId, itemBuyDate1, itemBuyDate2);
+        string fileName = "AA生活记账数据导出(" + userId + userName + "_" + this.ItemBuyDate1.Text + "_" + this.ItemBuyDate2.Text + ").xlsx";
         string savePath = Server.MapPath("/Backup/Export/") + fileName;
 
         try
@@ -123,7 +140,7 @@ public partial class UserDataAdmin : BasePage
             sheet.Cells[i, 0].PutValue(cardList.Rows[i]["CardName"].ToString());
         }
 
-        string fileName = "AA生活记账导入模板(" + userId + ").xlsx";
+        string fileName = "AA生活记账导入模板(" + userId + userName + ").xlsx";
         string savePath = Server.MapPath("/Backup/Template/") + fileName;
 
         try
@@ -153,7 +170,7 @@ public partial class UserDataAdmin : BasePage
             return;
         }
 
-        fileName = "(" + userId + ")" + fileName;
+        fileName = "(" + userId + userName + ")" + fileName;
         string savePath = Server.MapPath("/Backup/Import/") + fileName;
         FileUpload1.SaveAs(savePath);
         DataTable dt = AsposeImport(savePath);
@@ -216,16 +233,14 @@ public partial class UserDataAdmin : BasePage
         {
             conn.ConnectionString = dbConnectionString;
             conn.Open();
-            DbTransaction tran = conn.BeginTransaction();
             DbCommand comm = conn.CreateCommand();
             comm.Connection = conn;
-            comm.Transaction = tran;
 
             try
             {
                 int n1 = 0;
                 int n2 = 0;
-                StringBuilder sb = new StringBuilder();
+                string sql = "";
                 foreach (DataRow dr in dt.Rows)
                 {
                     string _itemType = GetItemTypeValue(dr["分类"].ToString());
@@ -254,24 +269,22 @@ public partial class UserDataAdmin : BasePage
                         n2++;
                         continue;
                     }
-                    sb.AppendLine("INSERT INTO ItemTable(ItemType, ItemName, CategoryTypeID, ItemPrice, ItemBuyDate, UserID, Recommend, ZhuanTiID, CardID, Synchronize, ModifyDate) VALUES('" +
-                                   item.ItemType + "','" + item.ItemName + "','" + item.CategoryTypeID + "','" + item.ItemPrice + "','" +
-                                   item.ItemBuyDate.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss") + "','" + userId + "','" + item.Recommend + "','" +
-                                   item.ZhuanTiID + "','" + item.CardID + "','" + item.Synchronize + "','" + item.ModifyDate + "');");
+                    sql = "INSERT INTO ItemTable(ItemType, ItemName, CategoryTypeID, ItemPrice, ItemBuyDate, UserID, Recommend, ZhuanTiID, CardID, Synchronize, ModifyDate) VALUES('" +
+                                item.ItemType + "','" + item.ItemName + "','" + item.CategoryTypeID + "','" + item.ItemPrice + "','" +
+                                item.ItemBuyDate.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss") + "','" + userId + "','" + item.Recommend + "','" +
+                                item.ZhuanTiID + "','" + item.CardID + "','" + item.Synchronize + "','" + item.ModifyDate + "');";
+                    
+                    comm.CommandText = sql;
+                    comm.ExecuteNonQuery();
+                    
                     n1++;
                 }
                 
                 arr[0] = n1;
                 arr[1] = n2;
-                if (sb.ToString() == "") return arr;
-
-                comm.CommandText = sb.ToString();
-                comm.ExecuteNonQuery();
-                tran.Commit();
             }
             catch
             {
-                tran.Rollback();
                 throw;
             }
             finally
@@ -319,6 +332,7 @@ public partial class UserDataAdmin : BasePage
     //取类别ID
     private int GetCategoryTypeId(string catName)
     {
+        catTypeList = cat_bll.GetUserCategoryList(userId);
         foreach (DataRow dr in catTypeList.Rows)
         {
             if (catName == dr["CategoryTypeName"].ToString())
@@ -354,7 +368,8 @@ public partial class UserDataAdmin : BasePage
         {
             return 0;
         }
-
+        
+        zhuanTiList = zt_bll.GetZhuanTiList(userId);
         foreach (DataRow dr in zhuanTiList.Rows)
         {
             if (zhuanTiName == dr["ZhuanTiName"].ToString())
@@ -390,6 +405,7 @@ public partial class UserDataAdmin : BasePage
             return 0;
         }
 
+        cardList = card_bll.GetCardList(userId);
         foreach (DataRow dr in cardList.Rows)
         {
             if (cardName == dr["CardName"].ToString())

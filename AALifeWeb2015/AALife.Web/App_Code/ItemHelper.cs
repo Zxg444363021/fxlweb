@@ -18,6 +18,8 @@ public class ItemHelper
     //借还价格格式
     public static string JieHuanColor(string str, int type)
     {
+        if (str == "") return "";
+
         double price = Convert.ToDouble(str);
         if (price == 0)
         {

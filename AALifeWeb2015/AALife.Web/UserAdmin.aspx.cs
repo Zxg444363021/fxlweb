@@ -4,7 +4,7 @@ using AALife.BLL;
 using AALife.Model;
 using System.Data;
 
-public partial class UserAdmin : BasePage
+public partial class Web2016_UserAdmin : WebPage
 {
     private UserTableBLL bll = new UserTableBLL();
     private OAuthTableBLL oauth_bll = new OAuthTableBLL();
@@ -133,13 +133,20 @@ public partial class UserAdmin : BasePage
         {
             Utility.Alert(this, "预算率填写错误！");
             return;
+        } 
+        
+        int rateValue = Convert.ToInt32(categoryRate);
+        if (rateValue > 100)
+        {
+            Utility.Alert(this, "预算率不能大于100！");
+            return;
         }
 
         user.UserNickName = userNickName;
         user.UserEmail = userEmail;
         user.UserPhone = userPhone;
         user.UserWorkDay = userWorkDay;
-        user.CategoryRate = Convert.ToInt32(categoryRate);
+        user.CategoryRate = rateValue;
         user.Synchronize = 1;
         user.ModifyDate = DateTime.Now;
 

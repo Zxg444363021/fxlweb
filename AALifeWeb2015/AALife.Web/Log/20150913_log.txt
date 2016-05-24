@@ -1,6 +1,0 @@
-2015-09-13 00:30:28.5928|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,
-2015-09-13 00:34:00.5296|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,
-2015-09-13 00:34:22.3773|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,
-2015-09-13 06:55:53.1942|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,
-2015-09-13 07:49:50.3291|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,
-2015-09-13 08:30:57.0552|INFO|AALife.DAL.UserTableDAL|UserLogin: pyfxl, pyfxl,

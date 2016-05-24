@@ -1,133 +1,197 @@
-﻿<%@ Page Title="网上记账" Language="C#" MasterPageFile="UserControl/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="网上记账" Language="C#" MasterPageFile="UserControl/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Default" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="js" Runat="Server">
 <script type="text/javascript">
-    var arrChart = null;
+    var chart_arr = "<%=chartDate %>".split(",");
+
+    function chart_click(index) {
+        //alert(chart_arr[index]);
+        location.href = "ItemQuery.aspx?date=" + chart_arr[index] + "&showType=d";
+    }
+
+    function chart_open(index) {
+        //alert(chart_arr[index]);
+        location.href = "ItemGroup.aspx?date=<%=curDate%>&" + chart_arr[index];
+    }
 
     $(function () {
-        $("#datechoosehome").datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            defaultDate: "<%=Session["TodayDate"].ToString() %>",
-            onSelect: function (date, format) {
-                location.href = "Default.aspx?date=" + date;
+
+        //图片选择日期
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showOn: "button",
+            buttonImage: "theme/images/dot_10.gif",
+            buttonImageOnly: true,
+            buttonText: "选择日期",
+            yearRange: "-10:+10",
+            dateFormat: "yy-mm-dd",
+            defaultDate : "<%=curDate %>",
+            onSelect: function (date, inst) {
+                $(this).val("<%=QueryHelper.GetSpinDateVal(curDate, 0, "d") %>");
+                location.href = "Default.aspx?date=" + date + "&chartType=<%=chartType %>";
+            },
+            beforeShow: function (input, inst) {
+                $.datepicker._pos = $.datepicker._findPos(input);
+                $.datepicker._pos[0] = $("#m_right .ui-spinner").offset().left;
+                $.datepicker._pos[1] = $("#m_right .ui-spinner").offset().top + 22;
             }
         });
-        
-        setlink(0, "ItemList.aspx");
-        setlink(1, "JieHuanFenXi.aspx");
 
-        arrChart = $("#<%=hidChartData.ClientID %>").val().split(",");
+        //选择日期
+        $("#datepicker").spinner({
+            spin: function (event, ui) {
+                var ref = $(this).attr("ref-spin");
+                var date = $(this).attr("ref-date");
+                //if (date == "") return false;
+                if (ui.value > ref) {
+                    $(this).attr("ref-spin", ui.value);
+                    $(this).spinner("value", "<%=QueryHelper.GetSpinDate(curDate, 1, "d") %>");
+                    location.href = "Default.aspx?date=<%=QueryHelper.GetSpinDateVal(curDate, 1, "d") %>&chartType=<%=chartType %>";
+                    return false;
+                } else {
+                    $(this).attr("ref-spin", ui.value);
+                    $(this).spinner("value", "<%=QueryHelper.GetSpinDate(curDate, -1, "d") %>");
+                    location.href = "Default.aspx?date=<%=QueryHelper.GetSpinDateVal(curDate, -1, "d") %>&chartType=<%=chartType %>";
+                    return false;
+                }
+            }
+        });
 
-        //公告
-        //alert($.cookie("message"));
-        if ($.cookie("message") == "undefined" && "<%=WebConfiguration.SiteMessage%>" != "") {
-            $.cookie("message", "1");
-            $("#sitemsg").animate({ top: "180px", opacity: 0.95 }, 1000);
+        //显示下拉
+        $("#<%=ChartTypeDropDown.ClientID %>").multiselect({
+            multiple: false,
+            header: false,
+            selectedList: 1,
+            minWidth: 130,
+            height: 96,
+            click: function (event, ui) {
+                setTimeout(charttypeclick, 0);
+            }
+        });
+
+        function charttypeclick() {
+            location.href = "Default.aspx?date=<%=curDate %>&chartType=" + $("#<%=ChartTypeDropDown.ClientID %>").val();
         }
-    });
-    
-    function chart_click(index) {
-        //alert(arrChart[index]);
-        location.href = "ItemList.aspx?date=" + arrChart[index];
-    }
 
-    function setlink(idx, url) {
-        var td_val = $(".tablehome tr td").eq(idx).html();
-        $(".tablehome tr td").eq(idx).html("<a href='"+url+"'>" + td_val + "</a>");
-    }
-    
-    //网站公告
-    function msgclose() {
-        $("#sitemsg").fadeOut();
-    }
-</script>    
-<style type="text/css">
-.ui-datepicker th { height: 27px; }
-.ui-widget-content { width: 100%; border: none; }
-.ui-widget-header { height: 24px; }
-.ui-datepicker td span, .ui-datepicker td a { padding: 0; height: 22px; line-height: 22px; }
-.ui-datepicker table { font-size: 11px; }
-.ui-datepicker td, .ui-datepicker th { padding: 0; }
-</style>
+    });
+
+</script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
-<div id="sitemsg">
-    <a href="javascript:msgclose();" class="close">×</a>
-    <h3>公&nbsp;&nbsp;&nbsp;&nbsp;告</h3>
-    <p><%=Utility.UnReplaceString(WebConfiguration.SiteMessage)%></p>
-</div>
-<div id="content">
-    <div class="left" style="width:69%;height:202px;">
-        <div class="title"><img src="/Images/Others/coins.png" alt="" title="" />&nbsp;&nbsp;消费统计列表<span><%=Convert.ToDateTime(Session["TodayDate"]).ToString("yyyy年MM月dd日") %></span></div>
-        <table border="0" cellspacing="0" style="width:100%;" class="tablehome">
-            <tr>
-                <td colspan="4" class="cellcenter cellright">收支统计</td>
-                <td colspan="4" class="cellcenter">收支借还（全部）</td>
-            </tr>
-            <tr>
-                <td style="width:12%;">收入</td>
-                <td style="width:13%;" class="cellprice">￥<asp:Label ID="Label2" runat="server"></asp:Label></td>
-                <td style="width:12%;">支出</td>
-                <td style="width:13%;" class="cellprice cellright">￥<asp:Label ID="Label4" runat="server"></asp:Label></td>
-                <td style="width:12%;" class="priceblue">借出</td>
-                <td style="width:13%;" class="cellprice priceblue">￥<asp:Label ID="Label5" runat="server"></asp:Label></td>
-                <td style="width:12%;" class="pricered">借入</td>
-                <td style="width:13%;" class="cellprice pricered">￥<asp:Label ID="Label7" runat="server"></asp:Label></td>
-            </tr>
-            <tr>
-                <td>月入</td>
-                <td class="cellprice">￥<asp:Label ID="Label1" runat="server"></asp:Label></td>
-                <td>月出</td>
-                <td class="cellprice cellright">￥<asp:Label ID="Label3" runat="server"></asp:Label></td>
-                <td class="pricered">还入</td>
-                <td class="cellprice pricered">￥<asp:Label ID="Label6" runat="server"></asp:Label></td>
-                <td class="priceblue">还出</td>
-                <td class="cellprice priceblue">￥<asp:Label ID="Label8" runat="server"></asp:Label></td>
-            </tr>
-            <tr>
-                <td>年入</td>
-                <td class="cellprice">￥<asp:Label ID="Label11" runat="server"></asp:Label></td>
-                <td>年出</td>
-                <td class="cellprice cellright">￥<asp:Label ID="Label12" runat="server"></asp:Label></td>
-                <td class="pricebold <%= ItemHelper.JieHuanColor(this.Label9.Text, 1) %>">未还</td>
-                <td class="cellprice pricebold <%= ItemHelper.JieHuanColor(this.Label9.Text, 1) %>">￥<asp:Label ID="Label9" runat="server"></asp:Label></td>
-                <td class="pricebold <%= ItemHelper.JieHuanColor(this.Label10.Text, 1) %>">欠还</td>
-                <td class="cellprice pricebold <%= ItemHelper.JieHuanColor(this.Label10.Text, 1) %>">￥<asp:Label ID="Label10" runat="server"></asp:Label></td>
-            </tr>
-            <tr>
-                <td colspan="4" class="userfunc cellright usermoney"><p><img src="/Images/Others/ico_service01_03.gif" border="0" alt="" /> <asp:DropDownList ID="CardList" runat="server" Width="80" AutoPostBack="true" OnSelectedIndexChanged="CardList_SelectionChanged"></asp:DropDownList></p><strong><asp:Label ID="Label14" runat="server"></asp:Label></strong><em><a href="UserCardAdmin.aspx" class="linkedit">管理</a></em></td>
-                <td colspan="4" class="userfunc"><asp:Label ID="Label13" runat="server"></asp:Label></td>
-            </tr>
-        </table>        
-    </div>
-    <div class="right" style="width:30%;height:202px;">
-        <div id="datechoosehome"></div>
-        <div id="datehome" style="display:none;">
-            <asp:Calendar ID="Calendar1" Width="100%" runat="server" 
-                OnSelectionChanged="Calendar1_SelectionChanged" EnableViewState="False" CssClass="calcss" 
-                OnVisibleMonthChanged="Calendar1_VisibleMonthChanged" NextMonthText="&raquo;" PrevMonthText="&laquo;">
-                <DayHeaderStyle CssClass="calhead" />
-                <TitleStyle CssClass="caltitle" />
-                <TodayDayStyle CssClass="caltoday" />
-                <NextPrevStyle ForeColor="White" />
-                <OtherMonthDayStyle ForeColor="Gray" />
-                <SelectedDayStyle ForeColor="Black" BackColor="#99CCFF" Font-Bold="true" />
-            </asp:Calendar>
+<asp:Content ID="Content3" ContentPlaceHolderID="content" Runat="Server">
+    <div class="r_title">
+        <div class="r_title_home">
+            <input type="text" id="datepicker" style="width:100px;" ref-spin="0" ref-date="<%=QueryHelper.GetSpinDateVal(curDate, 0, "d") %>" value="<%=QueryHelper.GetSpinDate(curDate, 0, "d") %>" readonly="true" />
         </div>
     </div>
-    <div class="h10"></div>
-    <script type="text/javascript" src="/ofcgwt/swfobject.js"></script>
-    <script type="text/javascript">
-        swfobject.embedSWF(
-        "/ofcgwt/open-flash-chart-Wyrm.swf", "my_chart", "100%", "231",
-        "9.0.0", "/ofcgwt/expressInstall.swf",
-        { "data-file": "/ItemDateChartJson.aspx" }, { "wmode": "transparent" }
-        );
-    </script>
-    <div id="my_chart"></div>
-    <input type="hidden" id="hidChartData" runat="server" />
-</div>
+    <div id="r_home">
+        <div class="r_home_top">
+            <table border="1" class="tablehome">
+                <tr>
+                    <th style="width:115px;" class="firsttitle">&nbsp;</th>
+                    <th style="width:115px;" class="shoutitle">收入</th>
+                    <th style="width:115px;" class="zhititle">支出</th>
+                    <th style="width:115px;" class="jietitle">结存</th>
+                </tr>
+                <tr>
+                    <td class="homelink"><a href="ItemQuery.aspx?date=<%=curDate %>&showType=d">今日 &gt;</a></td>
+                    <td><asp:HyperLink ID="ShouRuLab" runat="server" CssClass="shoucolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=d&itemType=sr" %>' /></td>
+                    <td><asp:HyperLink ID="ZhiChuLab" runat="server" CssClass="zhicolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=d&itemType=zc" %>' /></td>
+                    <td><asp:HyperLink ID="JieCunLab" runat="server" CssClass="jiecolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=d&itemType=sr,zc" %>' /></td>
+                </tr>
+                <tr>
+                    <td class="coltitle homelink"><a href="ItemQuery.aspx?date=<%=curDate %>&showType=w">本周 &gt;</a></td>
+                    <td class="coltitle"><asp:HyperLink ID="ShouRuWeekLab" runat="server" CssClass="shoucolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=w&itemType=sr" %>' /></td>
+                    <td class="coltitle"><asp:HyperLink ID="ZhiChuWeekLab" runat="server" CssClass="zhicolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=w&itemType=zc" %>' /></td>
+                    <td class="coltitle"><asp:HyperLink ID="JieCunWeekLab" runat="server" CssClass="jiecolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=w&itemType=sr,zc" %>' /></td>
+                </tr>
+                <tr>
+                    <td class="homelink"><a href="ItemQuery.aspx?date=<%=curDate %>&showType=m">本月 &gt;</a></td>
+                    <td><asp:HyperLink ID="ShouRuMonthLab" runat="server" CssClass="shoucolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=m&itemType=sr" %>' /></td>
+                    <td><asp:HyperLink ID="ZhiChuMonthLab" runat="server" CssClass="zhicolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=m&itemType=zc" %>' /></td>
+                    <td><asp:HyperLink ID="JieCunMonthLab" runat="server" CssClass="jiecolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=m&itemType=sr,zc" %>' /></td>
+                </tr>
+                <tr>
+                    <td class="coltitle homelink"><a href="ItemQuery.aspx?date=<%=curDate %>&showType=y">今年 &gt;</a></td>
+                    <td class="coltitle"><asp:HyperLink ID="ShouRuYearLab" runat="server" CssClass="shoucolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=y&itemType=sr" %>' /></td>
+                    <td class="coltitle"><asp:HyperLink ID="ZhiChuYearLab" runat="server" CssClass="zhicolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=y&itemType=zc" %>' /></td>
+                    <td class="coltitle"><asp:HyperLink ID="JieCunYearLab" runat="server" CssClass="jiecolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=y&itemType=sr,zc" %>' /></td>
+                </tr>
+                <tr>
+                    <td class="homelink"><a href="ItemQuery.aspx?date=<%=curDate %>&showType=a">全部 &gt;</a></td>
+                    <td><asp:HyperLink ID="ShouRuAllLab" runat="server" CssClass="shoucolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=a&itemType=sr" %>' /></td>
+                    <td><asp:HyperLink ID="ZhiChuAllLab" runat="server" CssClass="zhicolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=a&itemType=zc" %>' /></td>
+                    <td><asp:HyperLink ID="JieCunAllLab" runat="server" CssClass="jiecolor hometotal" NavigateUrl='<%# "ItemQuery.aspx?date=" + curDate + "&showType=a&itemType=sr,zc" %>' /></td>
+                </tr>
+            </table> 
+            <table border="1" class="tablehome">
+                <tr>
+                    <th style="width:115px;" class="shoutitle">借入</th>
+                    <th style="width:115px;" class="zhititle">借出</th>
+                </tr>
+                <tr>
+                    <td><asp:HyperLink ID="JieRuAllLab" runat="server" CssClass="shoucolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=jr" /></td>
+                    <td><asp:HyperLink ID="JieChuAllLab" runat="server" CssClass="zhicolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=jc" /></td>
+                </tr>
+                <tr>
+                    <th class="zhititle">还出</th>
+                    <th class="shoutitle">还入</th>
+                </tr>
+                <tr>
+                    <td><asp:HyperLink ID="HuanChuAllLab" runat="server" CssClass="zhicolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=hc" /></td>
+                    <td><asp:HyperLink ID="HuanRuAllLab" runat="server" CssClass="shoucolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=hr" /></td>
+                </tr>
+                <tr>
+                    <th class="jietitle">未还</th>
+                    <th class="jietitle">欠还</th>
+                </tr>
+                <tr>
+                    <td><asp:HyperLink ID="WeiHuanAllLab" runat="server" CssClass="jiecolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=jr,hc" /></td>
+                    <td><asp:HyperLink ID="QianHuanAllLab" runat="server" CssClass="jiecolor totalprice" NavigateUrl="ItemQuery.aspx?date=&showType=a&itemType=jc,hr" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="homelink"><a href="ItemGroup.aspx?date=&showType=a&groupType=ItemTypeName&subGroup=ItemName">借还明细&gt;&gt;</a></td>
+                </tr>
+            </table>
+            <table border="1" class="tablehome" style="margin-right:0;">
+                <asp:Repeater ID="CardList" runat="server">
+                    <ItemTemplate>
+                    <tr>
+                        <th style="width:210px;" class="qiantitle"><%# Eval("CardName")%></th>
+                    </tr>
+                    <tr>
+                        <td class="qiancolor qianprice"><a href='ItemQuery.aspx?date=&showType=a&cardId=<%# Eval("CDID") %>'><%# Eval("CardBalance", "{0:0.0##}") %></a></td>
+                    </tr>
+                    </ItemTemplate>
+                </asp:Repeater>            
+                <tr>
+                    <td class="homelink"><a href="UserCardAdmin.aspx">钱包管理&gt;&gt;</a></td>
+                </tr>
+            </table>
+            <div class="clear"></div>
+        </div>
+        <div class="r_home_chart clear">
+            <asp:DropDownList ID="ChartTypeDropDown" runat="server"></asp:DropDownList>
+            <script type="text/javascript" src="/ofcgwt/swfobject.js"></script>
+            <script type="text/javascript">
+                swfobject.embedSWF(
+                "/ofcgwt/open-flash-chart-SimplifiedChinese.swf", "my_chart", "100%", "241",
+                "9.0.0", "/ofcgwt/expressInstall.swf",
+                { "data-file": "<%=chartUrl %>" }, { "wmode": "transparent" }
+                );
+            </script>
+            <div id="my_chart"></div>
+            <asp:HiddenField ID="hidChartData" runat="server" />
+        </div>
+    </div>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="js" Runat="Server">
+<asp:Content ID="Content4" ContentPlaceHolderID="end" Runat="Server">
+<script type="text/javascript">
+    $(function () {
+        //设置当前菜单
+        $(".menu_nav li").eq(0).addClass("cur");
+        $("#menu_div .system_ul li").eq(0).addClass("cur");
+    });
+</script>
 </asp:Content>
+

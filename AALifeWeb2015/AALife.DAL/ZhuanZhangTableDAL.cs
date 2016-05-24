@@ -13,8 +13,8 @@ namespace AALife.DAL
         private static readonly string PARM_BEGIN_DATE = "@BeginDate";
         private static readonly string PARM_END_DATE = "@EndDate";
 
-        private static readonly string SQL_SELECT_ZHUANZHANG_LIST = string.Format(@"select * from ZhuanZhangTableView with(nolock) where UserID = {0} order by ZhuanZhangID desc", PARM_USER_ID);
-        private static readonly string SQL_SELECT_ZHUANZHANG_LIST_BY_DATE = string.Format(@"select * from ZhuanZhangTable with(nolock) where ModifyDate between {0} and {1} order by ZhuanZhangID desc", PARM_BEGIN_DATE, PARM_END_DATE);
+        private static readonly string SQL_SELECT_ZHUANZHANG_LIST = string.Format(@"select * from ZhuanZhangTableView with(nolock) where UserID = {0} order by ZhuanZhangDate desc", PARM_USER_ID);
+        private static readonly string SQL_SELECT_ZHUANZHANG_LIST_BY_DATE = string.Format(@"select * from ZhuanZhangTable with(nolock) where ModifyDate between {0} and {1} order by ZhuanZhangDate desc", PARM_BEGIN_DATE, PARM_END_DATE);
         private static readonly string SQL_INSERT_ZHUANZHANG = "InsertZhuanZhang_v5";
         private static readonly string SQL_UPDATE_ZHUANZHANG = "UpdateZhuanZhang_v5"; 
         private static readonly string SQL_SELECT_MAX_ZHUANZHANG_ID = string.Format(@"select isnull(max(ZZID),0)+1 from ZhuanZhangTable with(nolock) where UserID = {0}", PARM_USER_ID);

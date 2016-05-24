@@ -1,10 +1,12 @@
 ﻿using AALife.BLL;
 using AALife.Model;
+using NLog;
 using System;
 using System.Data;
 
 public partial class AALifeWeb_SyncItemList : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private ItemTableBLL bll = new ItemTableBLL();
 
     protected void Page_Load(object sender, EventArgs e)
@@ -38,7 +40,10 @@ public partial class AALifeWeb_SyncItemList : System.Web.UI.Page
         item.ZhuanTiID = Convert.ToInt32(ztId);
         item.CardID = Convert.ToInt32(cardId);
         item.ModifyDate = DateTime.Now;
-        
+
+        //写日志
+        log.Info(string.Format(" UserID:{0} | ItemAppID:{1} | ItemWebID:{2} | ItemInfo -> {3}", userId, itemAppId, itemId, item.ToString()));
+
         bool success = false;
         if (item.ItemID > 0)
         {

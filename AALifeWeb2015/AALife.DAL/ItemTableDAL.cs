@@ -23,15 +23,26 @@ namespace AALife.DAL
         private static readonly string PARM_ITEM_PRICE = "@ItemPrice";
         private static readonly string PARM_BEGIN_DATE = "@BeginDate";
         private static readonly string PARM_END_DATE = "@EndDate";
+        private static readonly string PARM_BEGIN_DATE_2 = "@BeginDate2";
+        private static readonly string PARM_END_DATE_2 = "@EndDate2";
+        private static readonly string PARM_QUERY = "@Query";
+        private static readonly string PARM_LABEL = "@Label";
+        private static readonly string PARM_VALUE = "@Value";
+        private static readonly string PARM_SORT = "@Sort";
 
         private static readonly string SQL_SELECT_ITEM_LIST_BY_KEYWORDS = "GetItemListByKeywords_v5";
         private static readonly string SQL_SELECT_ITEM_LIST = "GetItemList_v5";
+        private static readonly string SQL_SELECT_ITEM_LIST_BY_DATE_V6 = "GetItemListByDate_v6";
+        private static readonly string SQL_SELECT_ITEM_LIST_BY_GROUP_V6 = "GetItemListByGroup_v6";
+        private static readonly string SQL_SELECT_ITEM_LIST_BY_COMPARE_V6 = "GetItemListByCompare_v6";
+        private static readonly string SQL_SELECT_LIST_BOX_DATA_V6 = "GetListBoxData_v6";
         private static readonly string SQL_SELECT_ITEM_LIST_BY_DATE = string.Format(@"select * from ItemTable with(nolock) where ModifyDate between {0} and {1} order by ItemID desc", PARM_BEGIN_DATE, PARM_END_DATE);
         private static readonly string SQL_SELECT_ITEM_COUNT = string.Format(@"select count(0) from ItemTable with(nolock) where UserID = {0}", PARM_USER_ID);
         private static readonly string SQL_SELECT_ITEM_LIST_BY_USER_ID = string.Format(@"select * from ItemTable with(nolock) where UserID = {0} order by ItemID desc", PARM_USER_ID);
         private static readonly string SQL_SELECT_ITEM_LIST_ALL_BY_KEYWORDS = string.Format(@"select * from ItemTable with(nolock) where ItemName like '%'+{0}+'%' order by ItemID desc", PARM_KEYWORDS);
-        private static readonly string SQL_SELECT_ITEM_LIST_WITH_SYNC = string.Format(@"select * from ItemTableViewSync with(nolock) where UserID = {0} and Synchronize = 1 order by ItemID asc", PARM_USER_ID);
+        private static readonly string SQL_SELECT_ITEM_LIST_WITH_SYNC = string.Format(@"select top 500 * from ItemTableViewSync with(nolock) where UserID = {0} and Synchronize = 1 order by ItemID asc", PARM_USER_ID);
         private static readonly string SQL_SELECT_ITEM_TYPE_LIST = string.Format(@"select * from ItemTypeTable with(nolock) order by Rank asc");
+        private static readonly string SQL_SELECT_REGION_TYPE_LIST = string.Format(@"select * from RegionTypeTable with(nolock) order by Rank asc");
         private static readonly string SQL_INSERT_ITEM = "InsertItem_v5";
         private static readonly string SQL_UPDATE_ITEM = "UpdateItem_v5";
         private static readonly string SQL_SELECT_ITEM_BY_ITEM_ID = string.Format(@"select * from ItemTable with(nolock) where ItemID = {0}", PARM_ITEM_ID);
@@ -47,6 +58,7 @@ namespace AALife.DAL
         private static readonly string SQL_SELECT_ITEM_NAME_LIST_BY_KEYWORDS = string.Format(@"select ItemName, count(ItemName) as CountNum from ItemTableView with(nolock) where UserID = {0} and ItemName like '%'+{1}+'%' group by ItemName order by CountNum desc", PARM_USER_ID, PARM_KEYWORDS);
         private static readonly string SQL_SELECT_ITEM_PRICE_LIST_BY_ITEM_NAME = string.Format(@"select ItemPrice, count(ItemPrice) as CountNum from ItemTableView with(nolock) where UserID = {0} and ItemName = {1} group by ItemPrice order by CountNum desc", PARM_USER_ID, PARM_ITEM_NAME);
         private static readonly string SQL_SELECT_ITEM_EXPORT_LIST = "GetItemExportList_v5";
+        private static readonly string SQL_SELECT_ITEM_EXPORT_LIST_V6 = "GetItemExportList_v6";
         private static readonly string SQL_UPDATE_BALANCE_MONEY = "UpdateBalanceMoney_v5";
         private static readonly string SQL_UPDATE_ITEM_LIST_WEB_BACK = string.Format(@"update ItemTable set Synchronize = 0, ItemAppID = {0} where ItemID = {1}", PARM_ITEM_APP_ID, PARM_ITEM_ID);
         private static readonly string SQL_UPDATE_ITEM_LIST_WEB_BACK_BY_USER_ID = string.Format(@"update ItemTable set Synchronize = 0, ItemAppID = 0 where UserID = {0}", PARM_USER_ID);
@@ -70,6 +82,120 @@ namespace AALife.DAL
             parms[1].Value = itemBuyDate;
 
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_LIST, parms))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 根据日期范围取商品列表
+        /// </summary>
+        public DataTable GetItemList(int userId, DateTime beginDate, DateTime endDate)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_BEGIN_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_END_DATE, SqlDbType.DateTime)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = beginDate;
+            parms[2].Value = endDate;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_LIST_BY_DATE_V6, parms))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 根据日期范围取商品统计
+        /// </summary>
+        public DataTable GetItemListByGroup(int userId, DateTime beginDate, DateTime endDate, string myQuery, string myLabel, string mySort)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_BEGIN_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_END_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_QUERY, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_LABEL, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_SORT, SqlDbType.NVarChar, 10)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = beginDate;
+            parms[2].Value = endDate;
+            parms[3].Value = myQuery;
+            parms[4].Value = myLabel;
+            parms[5].Value = mySort;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_LIST_BY_GROUP_V6, parms))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 根据日期范围取商品比较
+        /// </summary>
+        public DataTable GetItemListByCompare(int userId, DateTime beginDate, DateTime endDate, DateTime beginDate2, DateTime endDate2, string myQuery, string myLabel, string mySort)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_BEGIN_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_END_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_BEGIN_DATE_2, SqlDbType.DateTime),
+					new SqlParameter(PARM_END_DATE_2, SqlDbType.DateTime),
+					new SqlParameter(PARM_QUERY, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_LABEL, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_SORT, SqlDbType.NVarChar, 10)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = beginDate;
+            parms[2].Value = endDate;
+            parms[3].Value = beginDate2;
+            parms[4].Value = endDate2;
+            parms[5].Value = myQuery;
+            parms[6].Value = myLabel;
+            parms[7].Value = mySort;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_LIST_BY_COMPARE_V6, parms))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 取下拉数据
+        /// </summary>
+        public DataTable GetListBoxData(int userId, string myLabel, string myValue, string mySort)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_LABEL, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_VALUE, SqlDbType.NVarChar, 100),
+					new SqlParameter(PARM_SORT, SqlDbType.NVarChar, 10)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = myLabel;
+            parms[2].Value = myValue;
+            parms[3].Value = mySort;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_LIST_BOX_DATA_V6, parms))
             {
                 lists.Load(rdr);
             }
@@ -320,6 +446,21 @@ namespace AALife.DAL
 
             return lists;
         }
+
+        /// <summary>
+        /// 取商品区间列表
+        /// </summary>
+        public DataTable GetRegionTypeList()
+        {
+            DataTable lists = new DataTable();
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.Text, SQL_SELECT_REGION_TYPE_LIST, null))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
         
         /// <summary>
         /// 插入商品
@@ -471,6 +612,30 @@ namespace AALife.DAL
             parm.Value = userId;
 
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_EXPORT_LIST, parm))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 取导出商品列表
+        /// </summary>
+        public DataTable GetItemExportList(int userId, DateTime beginDate, DateTime endDate)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_BEGIN_DATE, SqlDbType.DateTime),
+					new SqlParameter(PARM_END_DATE, SqlDbType.DateTime)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = beginDate;
+            parms[2].Value = endDate;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_ITEM_EXPORT_LIST_V6, parms))
             {
                 lists.Load(rdr);
             }

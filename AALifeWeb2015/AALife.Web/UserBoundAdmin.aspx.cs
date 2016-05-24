@@ -4,7 +4,7 @@ using AALife.BLL;
 using AALife.Model;
 using System.Transactions;
 
-public partial class UserBoundAdmin : BasePage
+public partial class UserBoundAdmin : WebPage
 {
     private OAuthTableBLL bll = new OAuthTableBLL();
     private UserTableBLL user_bll = new UserTableBLL();
@@ -116,11 +116,11 @@ public partial class UserBoundAdmin : BasePage
             return;
         }
 
-        UserInfo user = user_bll.GetUserByUserName(userName);
+        UserInfo user = user_bll.GetUserByUserPassword(userName, userPassword);
         using (TransactionScope ts = new TransactionScope())
         {
             success = bll.OAuthBoundOldUser(userId, user.UserID);
-            success = item_bll.UpdateItemToUser(userId, user.UserID);
+            bool succ = item_bll.UpdateItemToUser(userId, user.UserID);
 
             ts.Complete();
         }

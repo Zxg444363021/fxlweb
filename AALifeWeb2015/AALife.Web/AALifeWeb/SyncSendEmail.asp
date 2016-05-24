@@ -36,6 +36,8 @@
 	' And set silent to true as we wish to handle our errors ourself
 	msg.Logging = true
 	msg.silent = True
+    msg.Charset = "utf-8"
+    msg.ContentType = "text/html; charset='utf-8'"
 
 	' Most mailservers require a valid email address
 	' for the sender

@@ -28,7 +28,11 @@
                 <td><asp:TextBox ID="AccessTokenBox" runat="server" Width="300px"></asp:TextBox></td>
             </tr>
             <tr>
-                <td colspan="2"><asp:Button ID="GetQQImageButton" OnClick="GetQQImageButton_Click" runat="server" Text="GetQQImage & FixImage" /></td>
+                <td>FixImage</td>
+                <td><asp:CheckBox ID="FixImageBox" runat="server" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><asp:Button ID="GetQQImageButton" OnClick="GetQQImageButton_Click" runat="server" Text="Start Fix" /></td>
             </tr>
             <tr>
                 <td colspan="2">&nbsp;</td>

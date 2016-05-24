@@ -40,6 +40,7 @@ namespace AALife.DAL
         private static readonly string SQL_SELECT_JIA_GE_FEN_XI_MING_XI_LIST = "GetJiaGeFenXiMingXiList_v5";
         private static readonly string SQL_SELECT_JIE_HUAN_FEN_XI_LIST = "GetJieHuanFenXiList_v5";
         private static readonly string SQL_SELECT_SHOU_ZHI_JIE_HUAN_LIST = "GetShouZhiJieHuanList_v5";
+        private static readonly string SQL_SELECT_SHOU_ZHI_JIE_HUAN_LIST_V6 = "GetShouZhiJieHuanList_v6";
         
         private static readonly string SQL_SELECT_TONG_JI_WITH_ITEM_NAME_COUNT = "select top 10 count(ItemName) as CountNum, ItemName, max(ItemBuyDate) as ItemBuyDate from ItemTableTongJiView with(nolock) group by ItemName order by CountNum desc";
         private static readonly string SQL_SELECT_TONG_JI_WITH_ITEM_PRICE_MAX = "select top 10 ItemName, ItemPrice, ItemBuyDate from ItemTableTongJiView with(nolock) order by ItemPrice desc";
@@ -606,6 +607,28 @@ namespace AALife.DAL
             parms[1].Value = itemBuyDate;
 
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_SHOU_ZHI_JIE_HUAN_LIST, parms))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
+        /// <summary>
+        /// 取商品收支借还列表V6
+        /// </summary>
+        public DataTable GetShouZhiJieHuanListV6(int userId, DateTime itemBuyDate)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_USER_ID, SqlDbType.Int),
+					new SqlParameter(PARM_ITEM_BUY_DATE, SqlDbType.DateTime)
+			};
+            parms[0].Value = userId;
+            parms[1].Value = itemBuyDate;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.StoredProcedure, SQL_SELECT_SHOU_ZHI_JIE_HUAN_LIST_V6, parms))
             {
                 lists.Load(rdr);
             }

@@ -5,12 +5,13 @@ using System.Data;
 using System.Transactions;
 using System.Web.UI.WebControls;
 
-public partial class ItemAddSmart : BasePage
+public partial class ItemAddSmart : WebPage
 {
     private ItemTableBLL bll = new ItemTableBLL();
     private UserCategoryTableBLL cat_bll = new UserCategoryTableBLL();
     private ZhuanTiTableBLL zt_bll = new ZhuanTiTableBLL();
     private CardTableBLL card_bll = new CardTableBLL();
+    protected int RegionCount = 0;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -99,9 +100,9 @@ public partial class ItemAddSmart : BasePage
             this.RegionList.DataSource = list;
             this.RegionList.DataBind();
 
-            this.RegionCount.Text = list.Rows.Count.ToString();
-            
-            ClientScript.RegisterStartupScript(this.GetType(), "show", "showregion()", true);            
+            RegionCount = list.Rows.Count;
+
+            ClientScript.RegisterStartupScript(this.GetType(), "show", "$(function(){$('#dialog').dialog('open')})", true);            
         }
         else
         {
@@ -115,7 +116,7 @@ public partial class ItemAddSmart : BasePage
         int result = SaveItem();
         if (result == 1)
         {
-            Utility.Confirm(this, "添加成功，是否继续添加？", "ItemAddSmart.aspx", "ItemList.aspx");
+            Utility.Confirm(this, "添加成功，是否继续添加？", "ItemAddSmart.aspx", "ItemQuery.aspx?date=&showType=d");
         }
         else
         {
@@ -131,7 +132,7 @@ public partial class ItemAddSmart : BasePage
             return;
         }
 
-        if (this.RegionTypeHid.Value != "")
+        if (this.RegionID.Checked)
         {
             Utility.Alert(this, "选择了固定消费，不能进行X2添加！");
             return;

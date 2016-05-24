@@ -2,7 +2,7 @@
 using AALife.Model;
 using System;
 
-public partial class UserRegister : FirstPage
+public partial class Web2016_UserRegister : FirstPage
 {
     private UserTableBLL bll = new UserTableBLL();
 
@@ -88,7 +88,7 @@ public partial class UserRegister : FirstPage
         {
             Session["TodayDate"] = DateTime.Now.ToString("yyyy-MM-dd");
 
-            UserInfo newUser = bll.GetUserByUserName(userName);
+            UserInfo newUser = bll.GetUserByUserPassword(userName, userPassword);
             UserHelper.SaveSession(newUser);
             
             Utility.Alert(this, "注册成功。", "Default.aspx");

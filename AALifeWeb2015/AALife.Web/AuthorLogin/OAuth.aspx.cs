@@ -43,7 +43,7 @@ public partial class AuthorLogin_OAuth : FirstPage
             using (TransactionScope ts = new TransactionScope())
             {
                 success = bll.InsertUser(user);
-                user = bll.GetUserByUserName(user.UserName);
+                user = bll.GetUserByUserPassword(user.UserName, user.UserPassword);
                 oauth.UserID = user.UserID;
                 oauth.OldUserID = user.UserID;
                 success = oauth_bll.InsertOAuth(oauth);

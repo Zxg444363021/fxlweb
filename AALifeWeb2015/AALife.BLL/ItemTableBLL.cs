@@ -10,13 +10,45 @@ namespace AALife.BLL
     {
         private static readonly ItemTableDAL dal = new ItemTableDAL();
         private static readonly UserTableDAL user_dal = new UserTableDAL();
-        
+
         /// <summary>
         /// 根据日期取商品列表
         /// </summary>
         public DataTable GetItemList(int userId, DateTime itemBuyDate)
         {
             return dal.GetItemList(userId, itemBuyDate);
+        }
+
+        /// <summary>
+        /// 根据日期范围取商品列表
+        /// </summary>
+        public DataTable GetItemList(int userId, DateTime beginDate, DateTime endDate)
+        {
+            return dal.GetItemList(userId, beginDate, endDate);
+        }
+        
+        /// <summary>
+        /// 根据日期范围取商品统计
+        /// </summary>
+        public DataTable GetItemListByGroup(int userId, DateTime beginDate, DateTime endDate, string myQuery, string myLabel, string mySort)
+        {
+            return dal.GetItemListByGroup(userId, beginDate, endDate, myQuery, myLabel, mySort);
+        }
+
+        /// <summary>
+        /// 根据日期范围取商品比较
+        /// </summary>
+        public DataTable GetItemListByCompare(int userId, DateTime beginDate, DateTime endDate, DateTime beginDate2, DateTime endDate2, string myQuery, string myLabel, string mySort)
+        {
+            return dal.GetItemListByCompare(userId, beginDate, endDate, beginDate2, endDate2, myQuery, myLabel, mySort);
+        }
+
+        /// <summary>
+        /// 取下拉数据
+        /// </summary>
+        public DataTable GetListBoxData(int userId, string myLabel, string myValue, string mySort)
+        {
+            return dal.GetListBoxData(userId, myLabel, myValue, mySort);
         }
 
         /// <summary>
@@ -113,6 +145,14 @@ namespace AALife.BLL
         public DataTable GetItemTypeList()
         {
             return dal.GetItemTypeList();
+        }
+
+        /// <summary>
+        /// 取商品区间列表
+        /// </summary>
+        public DataTable GetRegionTypeList()
+        {
+            return dal.GetRegionTypeList();
         }
 
         /// <summary>
@@ -468,6 +508,14 @@ namespace AALife.BLL
         public DataTable GetItemExportList(int userId)
         {
             return dal.GetItemExportList(userId);
+        }
+        
+        /// <summary>
+        /// 取导出商品列表
+        /// </summary>
+        public DataTable GetItemExportList(int userId, DateTime beginDate, DateTime endDate)
+        {
+            return dal.GetItemExportList(userId, beginDate, endDate);
         }
 
         /// <summary>

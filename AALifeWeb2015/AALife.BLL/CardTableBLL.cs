@@ -8,7 +8,15 @@ namespace AALife.BLL
     public class CardTableBLL
     {
         private static readonly CardTableDAL dal = new CardTableDAL();
-        
+
+        /// <summary>
+        /// 取首页钱包列表
+        /// </summary>
+        public DataTable GetCardListWithHome(int userId)
+        {
+            return dal.GetCardListWithHome(userId);
+        }
+
         /// <summary>
         /// 取钱包列表
         /// </summary>

@@ -48,7 +48,7 @@ public partial class Tools_QQLoginFix : FirstPage
 
         string str = "";
         OAuthInfo oauth = bll.GetOAuthByOpenId(openid);
-        if (oauth.OAuthID > 0)
+        if (FixImageBox.Checked && oauth.OAuthID > 0)
         {
             int userId = oauth.UserID;
             UserInfo user = user_bll.GetUserByUserId(userId);

@@ -15,6 +15,7 @@ namespace AALife.DAL
         private static readonly string PARM_END_DATE = "@EndDate";
 
         private static readonly string SQL_SELECT_CARD_LIST = string.Format(@"select * from CardTableView with(nolock) where UserID = {0} order by CDID asc", PARM_USER_ID);
+        private static readonly string SQL_SELECT_CARD_LIST_WITH_HOME = string.Format(@"select * from CardTableView with(nolock) where UserID = {0} and CardShow = 1 order by CDID asc", PARM_USER_ID);
         private static readonly string SQL_SELECT_CARD_LIST_BY_DATE = string.Format(@"select * from CardTable with(nolock) where ModifyDate between {0} and {1} order by CardID desc", PARM_BEGIN_DATE, PARM_END_DATE);
         private static readonly string SQL_SELECT_CARD_LIST_WITH_SYNC = string.Format(@"select * from CardTable with(nolock) where UserID = {0} and Synchronize = 1 order by CDID asc", PARM_USER_ID);
         private static readonly string SQL_INSERT_CARD = "InsertCard_v5";
@@ -24,6 +25,24 @@ namespace AALife.DAL
         private static readonly string SQL_SELECT_CARD_BY_CARD_NAME = string.Format(@"select * from CardTableView with(nolock) where UserID = {0} and CardName = {1}", PARM_USER_ID, PARM_CARD_NAME);
         private static readonly string SQL_UPDATE_CARD_LIST_WEB_BACK = string.Format(@"update CardTable set Synchronize = 0 where UserID = {0}", PARM_USER_ID);
         
+        /// <summary>
+        /// 取首页钱包列表
+        /// </summary>
+        public DataTable GetCardListWithHome(int userId)
+        {
+            DataTable lists = new DataTable();
+
+            SqlParameter parm = new SqlParameter(PARM_USER_ID, SqlDbType.Int);
+            parm.Value = userId;
+
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnectionString, CommandType.Text, SQL_SELECT_CARD_LIST_WITH_HOME, parm))
+            {
+                lists.Load(rdr);
+            }
+
+            return lists;
+        }
+
         /// <summary>
         /// 取钱包列表
         /// </summary>
@@ -220,7 +239,8 @@ namespace AALife.DAL
 					new SqlParameter("@ModifyDate", SqlDbType.DateTime),
 					new SqlParameter("@CDID", SqlDbType.Int),
 					new SqlParameter("@UserID", SqlDbType.Int),
-					new SqlParameter("@MoneyStart", SqlDbType.Decimal)
+					new SqlParameter("@MoneyStart", SqlDbType.Decimal),
+					new SqlParameter("@CardShow", SqlDbType.TinyInt)
 			};
             parms[0].Value = card.CardID;
             parms[1].Value = card.CardName;
@@ -233,6 +253,7 @@ namespace AALife.DAL
             parms[8].Value = card.CDID;
             parms[9].Value = card.UserID;
             parms[10].Value = card.MoneyStart;
+            parms[11].Value = card.CardShow;
 
             return parms;
         }
@@ -254,6 +275,7 @@ namespace AALife.DAL
             if (!rdr.IsDBNull(8)) card.CDID = rdr.GetInt32(8);
             if (!rdr.IsDBNull(9)) card.UserID = rdr.GetInt32(9);
             if (!rdr.IsDBNull(10)) card.MoneyStart = rdr.GetDecimal(10);
+            if (!rdr.IsDBNull(11)) card.CardShow = rdr.GetByte(11);
 
             return card;
         }
