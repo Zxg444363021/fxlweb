@@ -12,7 +12,7 @@
     <uc4:FenXiMenu ID="FenXiMenu1" runat="server" />
     <table cellspacing="0" border="0" style="width:100%;" class="tabledate">
         <tr>
-            <td>数据来源于本网站2012年6月开通以来，所有用户添加的消费记录。</td>
+            <td>数据来源于本网站2012年6月开始以来，所有用户添加的消费记录。</td>
         </tr>
     </table>
     <div class="maindiv">

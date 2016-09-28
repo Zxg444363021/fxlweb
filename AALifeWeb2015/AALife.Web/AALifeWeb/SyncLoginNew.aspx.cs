@@ -1,11 +1,13 @@
 ﻿using AALife.BLL;
 using AALife.Model;
+using NLog;
 using System;
 using System.Data;
 using System.Text.RegularExpressions;
 
 public partial class AALifeWeb_SyncLoginNew : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private ItemTableBLL bll = new ItemTableBLL();
     private UserTableBLL user_bll = new UserTableBLL();
     private OAuthTableBLL oauth_bll = new OAuthTableBLL();
@@ -16,7 +18,10 @@ public partial class AALifeWeb_SyncLoginNew : System.Web.UI.Page
         string userPassword = Request.Form["userpass"].ToString();
         int type = Convert.ToInt32(Request.Form["type"]);
         string isUpdate = Request.Form["isupdate"] ?? "0";
-        
+
+        //写日志
+        log.Info(string.Format(" UserName:{0} | Type:{1} | IsUpdate:{2}", userName, type, isUpdate));
+          
         string result = "{";
 
         bool success = user_bll.UserLogin(userName, userPassword);

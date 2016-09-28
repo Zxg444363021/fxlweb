@@ -57,7 +57,7 @@ public partial class FLZJMXChartJson : BasePage
     private string GetChartJsonString(string itemName, string itemPrice, string countNum, string max, string step, string max2, string step2)
     {
         StringBuilder items = new StringBuilder(); 
-        items.Append("{\"title\":{\"text\":\"消费分类明细\",\"style\":\"font-size:14px;font-family:Microsoft YaHei;text-align:center;\"},");
+        items.Append("{\"title\":{\"text\":\"消费类别明细\",\"style\":\"font-size:14px;font-family:Microsoft YaHei;text-align:center;\"},");
         items.Append("\"x_axis\":{\"colour\":\"#909090\",\"3d\":5,\"labels\":{\"size\":12,\"labels\":[" + itemName + "]}},");
         items.Append("\"y_axis\":{\"steps\":" + step + ",\"max\":" + max + "},\"y_axis_right\":{\"grid-colour\":\"#000000\",\"steps\":" + step2 + ",\"max\":" + max2 + "},");
         items.Append("\"bg_colour\":\"#ffffff\",\"elements\":[");

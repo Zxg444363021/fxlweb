@@ -17,6 +17,7 @@ namespace AALife.DAL
         private static readonly string PARM_ITEM_APP_ID = "@ItemAppID";
         private static readonly string PARM_ZT_ID = "@ZTID";
         private static readonly string PARM_CATEGORY_ID = "@CategoryTypeID";
+        private static readonly string PARM_RECOMMEND = "@Recommend";
         private static readonly string PARM_CD_ID = "@CDID";
         private static readonly string PARM_ITEM_NAME = "@ItemName";
         private static readonly string PARM_ITEM_TYPE = "@ItemType";
@@ -46,6 +47,7 @@ namespace AALife.DAL
         private static readonly string SQL_INSERT_ITEM = "InsertItem_v5";
         private static readonly string SQL_UPDATE_ITEM = "UpdateItem_v5";
         private static readonly string SQL_SELECT_ITEM_BY_ITEM_ID = string.Format(@"select * from ItemTable with(nolock) where ItemID = {0}", PARM_ITEM_ID);
+        private static readonly string SQL_CHECK_ITEM_EXISTS = string.Format(@"select * from ItemTable with(nolock) where ItemName = {0} and Convert(nvarchar(10), ItemBuyDate, 23) = {1} and Recommend = {2} and ZhuanTiID = {3} and CardID = {4} and CategoryTypeID = {5} and ItemPrice = {6} and ItemType = {7}", PARM_ITEM_NAME, PARM_ITEM_BUY_DATE, PARM_RECOMMEND, PARM_ZT_ID, PARM_CD_ID, PARM_CATEGORY_ID, PARM_ITEM_PRICE, PARM_ITEM_TYPE);
         private static readonly string SQL_SELECT_ITEM_LIST_BY_REGION_ID = string.Format(@"select * from ItemTable with(nolock) where UserID = {0} and RegionID = {1}", PARM_USER_ID, PARM_REGION_ID);
         private static readonly string SQL_DELETE_ITEM = "DeleteItem_v5";
         private static readonly string SQL_SELECT_MAX_REGION_ID = string.Format(@"select isnull(max(RegionID),0)+1 from ItemTable with(nolock) where UserID = {0}", PARM_USER_ID);
@@ -320,6 +322,35 @@ namespace AALife.DAL
             }
 
             return item;
+        }
+
+        /// <summary>
+        /// 检查商品是否存在
+        /// </summary>
+        public bool CheckItemExists(ItemInfo item)
+        {
+            SqlParameter[] parms = {
+					new SqlParameter(PARM_ITEM_NAME, SqlDbType.NVarChar, 20),
+					new SqlParameter(PARM_ITEM_BUY_DATE, SqlDbType.Date),
+					new SqlParameter(PARM_RECOMMEND, SqlDbType.TinyInt),
+					new SqlParameter(PARM_ZT_ID, SqlDbType.Int),
+					new SqlParameter(PARM_CD_ID, SqlDbType.Int),
+					new SqlParameter(PARM_CATEGORY_ID, SqlDbType.Int),
+                    new SqlParameter(PARM_ITEM_PRICE, SqlDbType.Decimal), 
+                    new SqlParameter(PARM_ITEM_TYPE, SqlDbType.NVarChar, 10)
+			};
+            parms[0].Value = item.ItemName;
+            parms[1].Value = item.ItemBuyDate.ToString("yyyy-MM-dd");
+            parms[2].Value = item.Recommend;
+            parms[3].Value = item.ZhuanTiID;
+            parms[4].Value = item.CardID;
+            parms[5].Value = item.CategoryTypeID;
+            parms[6].Value = item.ItemPrice;
+            parms[7].Value = item.ItemType;
+
+            int result = Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.ConnectionString, CommandType.Text, SQL_CHECK_ITEM_EXISTS, parms));
+            
+            return result > 0;
         }
 
         /// <summary>

@@ -214,7 +214,7 @@ namespace AALife.Model
 
         public override string ToString()
         {
-            return string.Format("UserID:{0}, {1}, {2}, {3}, {4}, IsUpdate:{5}", UserID, UserName, UserNickName, UserImage, UserFrom, IsUpdate);
+            return string.Format("UserID:{0}, Pass:***, Name:{1}, Nick:{2}, Image:{3}, From:{4}, IsUpdate:{5}", UserID, UserName, UserNickName, UserImage, UserFrom, IsUpdate);
         }
 
     }

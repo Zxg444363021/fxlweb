@@ -15,7 +15,7 @@ public partial class AALifeWeb_SyncItemListWebBack : System.Web.UI.Page
         bool success = bll.UpdateItemListWebBack(itemId, itemAppId);
 
         //写日志
-        log.Info(string.Format(" Success:{0} | ItemID:{0} | ItemAppID:{1}", success, itemId, itemAppId));
+        //log.Info(string.Format(" Success:{0} | ItemID:{0} | ItemAppID:{1}", success, itemId, itemAppId));
 
         string result = "{";
         if (success)

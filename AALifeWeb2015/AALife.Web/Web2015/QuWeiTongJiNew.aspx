@@ -42,7 +42,7 @@ table.tablelist td, table.tablelist th { height: 60px; border-width: 2px; }
             <!--内容开始-->
             <table cellspacing="0" border="0" style="width:100%;" class="tablelist">
                 <tr>
-                    <td>数据来自官网2012年6月开站所有记录。</td>
+                    <td>数据来自官网2012年6月开始的所有记录。</td>
                 </tr>
             </table>
             <div class="h10"></div>

@@ -95,7 +95,7 @@ namespace AALife.Model
 
         public override string ToString()
         {
-            return string.Format("OAuthID:{0}, {1}, {2}, UserID:{3}, OldUserID:{4}, {5}", OAuthID, OpenID, AccessToken, UserID, OldUserID, OAuthFrom);
+            return string.Format("UserID:{0}, OldUserID:{1}, OauthID:{2}, OpenID:{3}, Token:{4}, From:{5}", UserID, OldUserID, OAuthID, OpenID, AccessToken, OAuthFrom);
         }
 
     }

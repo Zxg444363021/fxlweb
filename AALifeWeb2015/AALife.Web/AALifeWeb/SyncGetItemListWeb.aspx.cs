@@ -1,10 +1,12 @@
 ﻿using AALife.BLL;
+using NLog;
 using System;
 using System.Data;
 using System.Transactions;
 
 public partial class AALifeWeb_SyncGetItemListWeb : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private ItemTableBLL bll = new ItemTableBLL();
     private UserTableBLL user_bll = new UserTableBLL();
 
@@ -12,9 +14,13 @@ public partial class AALifeWeb_SyncGetItemListWeb : System.Web.UI.Page
     {
         int userId = Convert.ToInt32(Request.Form["userid"]);
         int type = Convert.ToInt32(Request.Form["type"]);
-        
+
+        //写日志
+        log.Info(string.Format(" UserID:{0} | Type:{1}", userId, type));
+
         DataTable dt = new DataTable();
-        using (TransactionScope ts = new TransactionScope())
+        dt = bll.GetItemListWithSync(userId);
+        /*using (TransactionScope ts = new TransactionScope())
         {
             if (type == 1)
             {
@@ -24,7 +30,7 @@ public partial class AALifeWeb_SyncGetItemListWeb : System.Web.UI.Page
             dt = bll.GetItemListWithSync(userId);
 
             ts.Complete();
-        }
+        }*/
 
         string result = "{";
         if (dt.Rows.Count > 0)

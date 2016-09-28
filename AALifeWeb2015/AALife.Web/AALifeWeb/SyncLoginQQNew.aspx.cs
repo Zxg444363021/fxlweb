@@ -24,7 +24,13 @@ public partial class AALifeWeb_SyncLoginQQNew : System.Web.UI.Page
         string userFrom = Request.Form["userfrom"].ToString() ?? Request.Form["oauthfrom"].ToString();
         int type = Convert.ToInt32(Request.Form["type"]);
         string isUpdate = Request.Form["isupdate"] ?? "0";
-        
+
+        if (userFrom.Length > 5)
+        {
+            userFrom = userFrom.Replace("_", "");
+            userFrom = userFrom.Insert(5, "_");
+        }
+
         UserInfo user = user_bll.GetUserByUserName(userName);
         if (userName == "") user.UserName = UserHelper.GetUserName(oAuthFrom);
         if (userName == "") user.UserPassword = "aalife";

@@ -47,7 +47,7 @@ public partial class FLZJChartJson : BasePage
     private string GetChartJsonString(string value)
     {
         StringBuilder items = new StringBuilder();
-        items.Append("{\"title\":{\"text\":\"消费分类排行\",\"style\":\"font-size:14px;font-family:Microsoft YaHei;text-align:center;\"},");
+        items.Append("{\"title\":{\"text\":\"消费类别排行\",\"style\":\"font-size:14px;font-family:Microsoft YaHei;text-align:center;\"},");
         items.Append("\"legend\":{\"visible\":true,\"bg_colour\":\"#fefefe\",\"position\":\"right\",\"border\":true,\"shadow\":true},");
         items.Append("\"bg_colour\":\"#ffffff\",\"elements\":[");
         items.Append("{\"type\":\"pie\",\"tip\":\"￥#val#<br>#label# #percent#\",\"values\":[" + value + "],\"on-click\":\"chart_click\",\"start-angle\":35,\"animate\":[{\"type\":\"fade\"},{\"type\":\"bounce\",\"distance\":4}],\"gradient-fill\":true,\"alpha\":0.5,");

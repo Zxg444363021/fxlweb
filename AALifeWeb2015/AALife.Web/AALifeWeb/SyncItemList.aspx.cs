@@ -42,7 +42,7 @@ public partial class AALifeWeb_SyncItemList : System.Web.UI.Page
         item.ModifyDate = DateTime.Now;
 
         //写日志
-        log.Info(string.Format(" UserID:{0} | ItemAppID:{1} | ItemWebID:{2} | ItemInfo -> {3}", userId, itemAppId, itemId, item.ToString()));
+        log.Info(string.Format(" ItemInfo -> {0}", item.ToString()));
 
         bool success = false;
         if (item.ItemID > 0)

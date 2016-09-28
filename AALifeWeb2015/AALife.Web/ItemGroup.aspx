@@ -59,7 +59,7 @@
         });
 
         function showtypeclick() {
-            location.href = "ItemGroup.aspx?date=<%=curDate %>&showType=" + $("#<%=ShowTypeDropDown.ClientID %>").val() + "&groupType=<%=groupType %>&subGroup=<%=subGroup %>&sort=<%=sort %>&by=<%=by %>";
+            location.href = "ItemGroup.aspx?showType=" + $("#<%=ShowTypeDropDown.ClientID %>").val() + "&groupType=<%=groupType %>&subGroup=<%=subGroup %>&sort=<%=sort %>&by=<%=by %>";
         }
 
         //分组类别下拉

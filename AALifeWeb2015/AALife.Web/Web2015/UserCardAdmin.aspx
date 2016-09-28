@@ -24,9 +24,9 @@
 <div id="datechoose"></div>
 <div id="zhuantiedit">
     <a href="javascript:zhuanzhangclose();">×</a>
-    <p>转账</p>
-    <asp:TextBox ID="CardMoneyEdit" runat="server" Width="58px"></asp:TextBox>
+    <p>转入</p>
     <asp:DropDownList ID="CardDownEdit" runat="server" Width="80px"></asp:DropDownList>
+    <asp:TextBox ID="CardMoneyEdit" runat="server" Width="58px"></asp:TextBox>
     <asp:Button ID="SubmitButtom" runat="server" Text="确定" CssClass="btninput" OnClick="SubmitButtom_Click" />
     <asp:HiddenField ID="CardMoneyEditHid" runat="server" Value="0" />
     <asp:HiddenField ID="CardIDEditHid" runat="server" Value="0" />
@@ -77,7 +77,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="转账">
                     <ItemTemplate>
-                        <a href="javascript:zhuanzhangedit('<%# Eval("CDID") %>', '<%# Eval("CardMoney") %>');">转账</a>
+                        <a href="javascript:zhuanzhangedit('<%# Eval("CDID") %>', '<%# Eval("CardMoney") %>');">转出</a>
                         &nbsp;&nbsp;<a href="UserZhuanZhangDetail.aspx">明细</a>
                     </ItemTemplate>
                     <HeaderStyle Width="20%" />

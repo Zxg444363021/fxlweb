@@ -1,9 +1,11 @@
 ﻿using AALife.BLL;
 using AALife.Model;
+using NLog;
 using System;
 
 public partial class AALifeWeb_SyncUserEdit : System.Web.UI.Page
 {
+    public static Logger log = LogManager.GetCurrentClassLogger();
     private UserTableBLL bll = new UserTableBLL();
 
     protected void Page_Load(object sender, EventArgs e)
@@ -34,7 +36,10 @@ public partial class AALifeWeb_SyncUserEdit : System.Web.UI.Page
         user.UserWorkDay = userWorkDay;
         user.ModifyDate = DateTime.Now;
         if (categoryRate != "") user.CategoryRate = Convert.ToInt32(categoryRate);
-                
+
+        //写日志
+        log.Info(string.Format(" UserInfo -> {0}", user.ToString()));
+          
         string result = "{";
 
         bool success = false;

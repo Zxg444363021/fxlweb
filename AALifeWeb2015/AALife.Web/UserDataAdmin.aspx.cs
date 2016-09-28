@@ -206,7 +206,7 @@ public partial class UserDataAdmin : WebPage
     //检查Excel文件
     private bool CheckExcel(DataTable dt)
     {
-        return dt.Columns.Contains("分类 *") && dt.Columns.Contains("商品名称 *") && dt.Columns.Contains("商品类别 *") && dt.Columns.Contains("商品价格 *") && dt.Columns.Contains("购买日期 *") &&
+        return dt.Columns.Contains("分类 *") && dt.Columns.Contains("商品类别 *") && dt.Columns.Contains("商品名称 *") && dt.Columns.Contains("商品价格 *") && dt.Columns.Contains("购买日期 *") &&
                dt.Columns.Contains("推荐否") && dt.Columns.Contains("专题") && dt.Columns.Contains("钱包");
     }
 
@@ -297,7 +297,7 @@ public partial class UserDataAdmin : WebPage
     }
 
     //检查数据重复
-    private bool CheckRepeat(ItemInfo _item)
+    private bool CheckRepeatOld(ItemInfo _item)
     {
         foreach (DataRow dr in all.Rows)
         {
@@ -327,6 +327,12 @@ public partial class UserDataAdmin : WebPage
         }
 
         return false;
+    }
+
+    //检查数据重复
+    private bool CheckRepeat(ItemInfo _item)
+    {
+        return bll.CheckItemExists(_item);
     }
 
     //取类别ID

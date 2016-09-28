@@ -68,7 +68,7 @@
         });
 
         function showtypeclick() {
-            location.href = "ItemQuery.aspx?date=<%=curDate %>&showType=" + $("#<%=ShowTypeDropDown.ClientID %>").val() + "&itemType=<%=HttpUtility.UrlEncode(itemType) %>&regionType=<%=HttpUtility.UrlEncode(regionType) %>&catId=<%=HttpUtility.UrlEncode(catId) %>&ztId=<%=HttpUtility.UrlEncode(ztId) %>&cardId=<%=HttpUtility.UrlEncode(cardId) %>&recommend=<%=HttpUtility.UrlEncode(recommend) %>&keywords=<%=HttpUtility.UrlEncode(keywords) %>&sort=<%=sort %>&by=<%=by %>";
+            location.href = "ItemQuery.aspx?showType=" + $("#<%=ShowTypeDropDown.ClientID %>").val() + "&itemType=<%=HttpUtility.UrlEncode(itemType) %>&regionType=<%=HttpUtility.UrlEncode(regionType) %>&catId=<%=HttpUtility.UrlEncode(catId) %>&ztId=<%=HttpUtility.UrlEncode(ztId) %>&cardId=<%=HttpUtility.UrlEncode(cardId) %>&recommend=<%=HttpUtility.UrlEncode(recommend) %>&keywords=<%=HttpUtility.UrlEncode(keywords) %>&sort=<%=sort %>&by=<%=by %>";
         }
 
         //分类下拉

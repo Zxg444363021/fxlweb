@@ -181,7 +181,7 @@ namespace AALife.Model
 
         public override string ToString()
         {
-            return string.Format("ItemID:{0}, ItemAppID:{1}, CategoryTypeID:{2}, {3}, {4}, {5}, {6}, CardID:{7}", ItemID, ItemAppID, CategoryTypeID, ItemName, ItemPrice, ItemBuyDate, ItemType, CardID);
+            return string.Format("UserID: {0}, ItemID:{1}, AppID:{2}, CatID:{3}, Name:{4}, Price:{5}, Date:{6}, CardID:{7}", UserID, ItemID, ItemAppID, CategoryTypeID, ItemName, ItemPrice, ItemBuyDate, CardID);
         }
 
     }

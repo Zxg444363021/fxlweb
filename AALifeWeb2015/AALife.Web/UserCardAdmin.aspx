@@ -34,9 +34,9 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" Runat="Server">
 <div id="dialog" title="钱包转账">
-    <p>转账金额：<asp:TextBox ID="CardMoneyEdit" runat="server" onkeyup="getprice(this);"></asp:TextBox></p>
-    <p>转账日期：<asp:TextBox ID="CardDateEdit" runat="server"></asp:TextBox></p>
-    <p>转账钱包：<asp:DropDownList ID="CardDownEdit" runat="server"></asp:DropDownList></p>
+    <p>转入钱包：<asp:DropDownList ID="CardDownEdit" runat="server"></asp:DropDownList></p>
+    <p>转入日期：<asp:TextBox ID="CardDateEdit" runat="server"></asp:TextBox></p>
+    <p>转入金额：<asp:TextBox ID="CardMoneyEdit" runat="server" onkeyup="getprice(this);"></asp:TextBox></p>
     <p><asp:Button ID="SubmitButtom" runat="server" Text="确定" CssClass="btninput" OnClick="SubmitButtom_Click" /></p>
     <asp:HiddenField ID="CardMoneyEditHid" runat="server" Value="0" />
     <asp:HiddenField ID="CardIDEditHid" runat="server" Value="0" />
@@ -100,7 +100,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="转账">
                         <ItemTemplate>
-                            <a href="javascript:void();" onclick="showdialog('<%# Eval("CDID") %>', '<%# Eval("CardMoney") %>');" class="baselink">转账</a>
+                            <a href="javascript:void();" onclick="showdialog('<%# Eval("CDID") %>', '<%# Eval("CardMoney") %>');" class="baselink">转出</a>
                             &nbsp;&nbsp;<a href="UserZhuanZhangDetail.aspx" class="baselink">明细</a>
                         </ItemTemplate>
                         <ItemStyle Width="154px" />

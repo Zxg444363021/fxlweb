@@ -100,6 +100,14 @@ namespace AALife.BLL
         }
 
         /// <summary>
+        /// 检查商品是否存在
+        /// </summary>
+        public bool CheckItemExists(ItemInfo item)
+        {
+            return dal.CheckItemExists(item);
+        }
+
+        /// <summary>
         /// 根据区间ID取商品列表
         /// </summary>
         public DataTable GetItemListByRegionId(int userId, int regionId)

@@ -104,7 +104,7 @@ public partial class UserDataAdmin : BasePage
     //模板下载
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
-        string filePath = Server.MapPath("/Backup/") + "AA生活记账导入模板.xlsx";
+        string filePath = Server.MapPath("/Backup/") + "AA生活记账导入模板1.xlsx";
         Workbook workbook = new Workbook(filePath);
 
         Worksheet sheet = workbook.Worksheets[1];
@@ -286,14 +286,14 @@ public partial class UserDataAdmin : BasePage
     {
         foreach (DataRow dr in all.Rows)
         {
-            string _itemName = dr["商品名称"].ToString();
-            DateTime _itemBuyDate = Convert.ToDateTime(dr["购买日期"]);
+            string _itemName = dr["商品名称 *"].ToString();
+            DateTime _itemBuyDate = Convert.ToDateTime(dr["购买日期 *"]);
             int _recommend = (dr["推荐否"].ToString() == "是" ? 1 : 0);
             int? _zhuanTiId = GetZhuanTiId(dr["专题"].ToString());
             int? _cardId = GetCardId(dr["钱包"].ToString());
-            int _catTypeId = GetCategoryTypeId(dr["商品类别"].ToString());
-            Decimal _itemPrice = Convert.ToDecimal(dr["商品价格"]);
-            string _itemType = GetItemTypeValue(dr["分类"].ToString());
+            int _catTypeId = GetCategoryTypeId(dr["商品类别 *"].ToString());
+            Decimal _itemPrice = Convert.ToDecimal(dr["商品价格 *"]);
+            string _itemType = GetItemTypeValue(dr["分类 *"].ToString());
 
             ItemInfo item = new ItemInfo();
             item.ItemName = _itemName;
