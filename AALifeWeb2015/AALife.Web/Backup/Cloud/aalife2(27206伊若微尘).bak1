@@ -1,0 +1,21 @@
+{"userid":"27206","username":"伊若微尘","userpass":"183183","usernickname":"","createdate":"2016-09-14","useremail":"","userphone":"","userworkday":"5","usermoney":"0.0","categoryrate":"90","userbound":"1","userimage":"tu_27206.jpg","login":"true","category":"0","cardid":"0","typeid":"0","homeview":"month","localsync":"false","websync":"false","sync":"没有要同步的数据。","bakdate":"2016-09-16","lock":"","welcome":"www.fxlweb.com"}
+
+DELETE FROM ItemTable;
+
+DELETE FROM CategoryTable;
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('1', '菜米油盐酱醋', '0', '1', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('2', '外就餐', '0', '2', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('3', '烟酒水', '0', '3', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('4', '零食', '0', '4', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('5', '水果', '0', '5', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('6', '日用品', '0', '6', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('7', '电子产品', '0', '7', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('8', '衣裤鞋袜帽', '0', '8', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('9', '杂费用', '0', '9', '1', '1', '0');
+INSERT INTO CategoryTable (CategoryID, CategoryName, CategoryPrice, CategoryRank, CategoryDisplay, CategoryLive, Synchronize) VALUES ('10', '娱乐', '0', '10', '1', '1', '0');
+
+DELETE FROM ZhuanTiTable;
+
+DELETE FROM ZhuanZhangTable;
+
+DELETE FROM CardTable;

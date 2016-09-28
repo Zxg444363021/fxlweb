@@ -23,4 +23,3 @@ D:\fxlweb\AALifeWeb2015\AALife.Web\Bin\AALife.DBUtility.dll
 D:\fxlweb\AALifeWeb2015\AALife.Web\Bin\AALife.DBUtility.pdb
 D:\fxlweb\AALifeWeb2015\AALife.DBUtility\obj\Debug\AALife.DBUtility.dll
 D:\fxlweb\AALifeWeb2015\AALife.DBUtility\obj\Debug\AALife.DBUtility.pdb
-D:\fxlweb\AALifeWeb2015\AALife.DBUtility\obj\Debug\AALife.DBUtility.csprojResolveAssemblyReference.cache
